@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Justine - Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Windows XP Desktop -->
+    <div class="desktop">
+      <!-- Desktop Icons -->
+      <div class="desktop-icons">
+        <div class="desktop-icon" data-window="about">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="4" y="4" width="24" height="24" fill="#4A90E2" />
+              <circle cx="16" cy="12" r="4" fill="white" />
+              <path
+                d="M10 24C10 20 12 18 16 18C20 18 22 20 22 24"
+                stroke="white"
+                stroke-width="2"
+                fill="none"
+              />
+            </svg>
+          </div>
+          <span class="icon-label">About Me</span>
+        </div>
+
+        <div class="desktop-icon" data-window="skills">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="4" y="6" width="24" height="20" fill="#E2A44A" />
+              <path
+                d="M8 10h16M8 14h12M8 18h16M8 22h10"
+                stroke="white"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+          <span class="icon-label">Skills</span>
+        </div>
+
+        <div class="desktop-icon" data-window="projects">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="4" y="6" width="24" height="20" fill="#4AE290" />
+              <rect x="8" y="10" width="6" height="6" fill="white" />
+              <rect x="18" y="10" width="6" height="6" fill="white" />
+              <rect x="8" y="18" width="6" height="6" fill="white" />
+              <rect x="18" y="18" width="6" height="6" fill="white" />
+            </svg>
+          </div>
+          <span class="icon-label">Projects</span>
+        </div>
+
+        <div class="desktop-icon" data-window="contact">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="4" y="8" width="24" height="16" fill="#E24A4A" />
+              <path d="M4 8L16 16L28 8" stroke="white" stroke-width="2" />
+            </svg>
+          </div>
+          <span class="icon-label">Contact</span>
+        </div>
+
+        <div class="desktop-icon" id="resume-icon">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="6"
+                y="2"
+                width="20"
+                height="28"
+                fill="#F0F0F0"
+                stroke="#888"
+                stroke-width="1"
+              />
+              <rect x="10" y="6" width="12" height="2" fill="#0055d4" />
+              <rect x="10" y="10" width="12" height="1" fill="#666" />
+              <rect x="10" y="13" width="10" height="1" fill="#666" />
+              <rect x="10" y="16" width="12" height="1" fill="#666" />
+              <rect x="10" y="19" width="8" height="1" fill="#666" />
+              <path
+                d="M26 26L28 28L26 30"
+                stroke="#E24A4A"
+                stroke-width="2"
+                fill="none"
+              />
+            </svg>
+          </div>
+          <span class="icon-label">My Resume.pdf</span>
+        </div>
+
+        <div class="desktop-icon" data-window="terminal">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="2" y="4" width="28" height="24" fill="#000" />
+              <path
+                d="M6 10L10 14L6 18"
+                stroke="#00ff00"
+                stroke-width="2"
+                fill="none"
+              />
+              <rect x="12" y="16" width="8" height="2" fill="#00ff00" />
+            </svg>
+          </div>
+          <span class="icon-label">Command Prompt</span>
+        </div>
+
+        <div class="desktop-icon" data-window="minesweeper">
+          <div class="icon-image">
+            <svg
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="4" y="4" width="24" height="24" fill="#C0C0C0" />
+              <circle cx="16" cy="16" r="6" fill="#000" />
+              <circle cx="16" cy="16" r="4" fill="#FF0000" />
+              <rect x="14" y="8" width="4" height="4" fill="#FFD700" />
+            </svg>
+          </div>
+          <span class="icon-label">Minesweeper</span>
+        </div>
+      </div>
+
+      <!-- Window: About Me -->
+      <div class="window" id="about-window" data-window="about">
+        <div class="title-bar">
+          <div class="title-bar-text">About Me</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="content-section">
+            <h2>Welcome to My Portfolio</h2>
+            <div class="profile-section">
+              <div class="profile-image">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="48" fill="#4A90E2" />
+                  <circle cx="50" cy="40" r="15" fill="white" />
+                  <path
+                    d="M25 80C25 65 35 55 50 55C65 55 75 65 75 80"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div class="profile-info">
+                <h3>Justine</h3>
+                <p class="job-title">Front-End Web Developer</p>
+                <p class="bio">
+                  Hello! I'm Justine, a passionate front-end developer who loves
+                  creating beautiful and functional web experiences. I
+                  specialize in modern web technologies and have a keen eye for
+                  design and user experience.
+                </p>
+                <p class="bio">
+                  When I'm not coding, you can find me exploring new
+                  technologies, contributing to open-source projects, or
+                  enjoying a good cup of coffee while working on side projects.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Window: Skills -->
+      <div class="window" id="skills-window" data-window="skills">
+        <div class="title-bar">
+          <div class="title-bar-text">Skills & Technologies</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="content-section">
+            <h2>Technical Skills</h2>
+
+            <div class="skill-category">
+              <h3>Front-End Development</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">HTML</span>
+                <span class="skill-badge">CSS</span>
+                <span class="skill-badge">JavaScript</span>
+                <span class="skill-badge">Bootstrap</span>
+                <span class="skill-badge">Tailwind</span>
+              </div>
+            </div>
+            <div class="skill-category">
+              <h3>Tools</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">Git</span>
+                <span class="skill-badge">GitHub</span>
+                <span class="skill-badge">VS Code</span>
+                <span class="skill-badge">Postman</span>
+              </div>
+            </div>
+            <div class="skill-category">
+              <h3>Back-End Development</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">PHP</span>
+                <span class="skill-badge">Node.js</span>
+                <span class="skill-badge">Express.js</span>
+                <span class="skill-badge">MySQL</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">REST APIs</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h3>Design & Concepts</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">Responsive Design</span>
+                <span class="skill-badge">UI/UX Design</span>
+                <span class="skill-badge">Accessibility</span>
+                <span class="skill-badge">Web Performance</span>
+                <span class="skill-badge">SEO</span>
+                <span class="skill-badge">Cross-Browser</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h3>AI Tools</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">Claude</span>
+                <span class="skill-badge">ChatGPT</span>
+                <span class="skill-badge">Gemini</span>
+                <span class="skill-badge">GROK</span>
+              </div>
+            </div>
+
+            <div class="skill-category">
+              <h3>Soft Skills</h3>
+              <div class="skill-tags">
+                <span class="skill-badge">Willingness to Learn</span>
+                <span class="skill-badge">Adaptability</span>
+                <span class="skill-badge">Teamwork</span>
+                <span class="skill-badge">Problem Solving</span>
+                <span class="skill-badge">Communication</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Window: Projects -->
+      <div class="window" id="projects-window" data-window="projects">
+        <div class="title-bar">
+          <div class="title-bar-text">My Projects</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="content-section">
+            <h2>Featured Projects</h2>
+
+            <div class="projects-grid">
+              <div class="project-card">
+                <div class="project-header">
+                  <h3>Portfolio Website</h3>
+                </div>
+                <p class="project-description">
+                  A Windows XP-themed portfolio website built with vanilla HTML,
+                  CSS, and JavaScript. Features a nostalgic desktop interface
+                  with draggable windows and smooth animations.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">HTML</span>
+                  <span class="tag">CSS</span>
+                  <span class="tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/yourusername/portfolio"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🔗</span> GitHub
+                  </a>
+                  <a
+                    href="https://yourportfolio.com"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🌐</span> Live Demo
+                  </a>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-header">
+                  <h3>Weather Dashboard</h3>
+                </div>
+                <p class="project-description">
+                  A responsive weather application that displays current
+                  conditions and forecasts. Features location search and
+                  beautiful weather visualizations.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">React</span>
+                  <span class="tag">API</span>
+                  <span class="tag">CSS</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/yourusername/weather-app"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🔗</span> GitHub
+                  </a>
+                  <a
+                    href="https://weather.yoursite.com"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🌐</span> Live Demo
+                  </a>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-header">
+                  <h3>Task Manager</h3>
+                </div>
+                <p class="project-description">
+                  A productivity app for managing daily tasks with categories,
+                  priorities, and deadlines. Includes local storage for
+                  persistence.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">LocalStorage</span>
+                  <span class="tag">CSS Grid</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/yourusername/task-manager"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🔗</span> GitHub
+                  </a>
+                  <a
+                    href="https://tasks.yoursite.com"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🌐</span> Live Demo
+                  </a>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-header">
+                  <h3>Landing Page Design</h3>
+                </div>
+                <p class="project-description">
+                  A modern, animated landing page with smooth scroll effects and
+                  responsive design. Built with accessibility and performance in
+                  mind.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">HTML5</span>
+                  <span class="tag">SCSS</span>
+                  <span class="tag">Animation</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://github.com/yourusername/landing-page"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🔗</span> GitHub
+                  </a>
+                  <a
+                    href="https://landing.yoursite.com"
+                    target="_blank"
+                    class="xp-button"
+                  >
+                    <span class="button-icon">🌐</span> Live Demo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Window: Contact -->
+      <div class="window" id="contact-window" data-window="contact">
+        <div class="title-bar">
+          <div class="title-bar-text">Contact Information</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="content-section">
+            <h2>Get In Touch</h2>
+
+            <div class="contact-info">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="3"
+                      y="5"
+                      width="18"
+                      height="14"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M3 5L12 12L21 5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <div class="contact-details">
+                  <h3>Email</h3>
+                  <p>justine.tesara0907@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <circle
+                      cx="12"
+                      cy="9"
+                      r="2.5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <div class="contact-details">
+                  <h3>Location</h3>
+                  <p>Rancho Imperial Kinale, Polangui, Albay Philippines</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M12 6v6l4 2"
+                      stroke="white"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="contact-details">
+                  <h3>Availability</h3>
+                  <p>Open to opportunities</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <h3>Connect With Me</h3>
+              <div class="social-buttons">
+                <button
+                  class="xp-button"
+                  onclick="
+                    window.open('https://github.com/JustineTesara', '_blank')
+                  "
+                >
+                  <span class="button-icon">💻</span> GitHub
+                </button>
+                <button
+                  class="xp-button"
+                  onclick="
+                    window.open(
+                      'https://www.linkedin.com/in/justine-tesara-a59674318/',
+                      '_blank',
+                    )
+                  "
+                >
+                  <span class="button-icon">💼</span> LinkedIn
+                </button>
+                <button
+                  class="xp-button"
+                  onclick="
+                    window.open(
+                      'https://www.facebook.com/justine.riosa.tesara',
+                      '_blank',
+                    )
+                  "
+                >
+                  <span class="button-icon">📘</span> Facebook
+                </button>
+              </div>
+            </div>
+
+            <div class="resume-download">
+              <h3>Download Resume</h3>
+              <p>Get a copy of my professional resume in PDF format</p>
+              <button
+                class="xp-button download-resume-btn"
+                id="download-resume"
+              >
+                <span class="button-icon">📄</span> Download Resume (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Window: Terminal / Command Prompt -->
+      <div
+        class="window terminal-window"
+        id="terminal-window"
+        data-window="terminal"
+      >
+        <div class="title-bar">
+          <div class="title-bar-text">C:\WINDOWS\system32\cmd.exe</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body terminal-body">
+          <div id="terminal-output">
+            <div class="terminal-line">
+              Microsoft Windows XP [Version 5.1.2600]
+            </div>
+            <div class="terminal-line">
+              (C) Copyright 1985-2001 Microsoft Corp.
+            </div>
+            <div class="terminal-line">&nbsp;</div>
+            <div class="terminal-line">
+              Welcome to Justine's Portfolio Terminal!
+            </div>
+            <div class="terminal-line">Type 'help' for available commands.</div>
+            <div class="terminal-line">&nbsp;</div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">C:\Portfolio&gt;</span>
+            <input
+              type="text"
+              id="terminal-input"
+              class="terminal-input"
+              autofocus
+              autocomplete="off"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Window: Minesweeper Game -->
+      <div
+        class="window minesweeper-window"
+        id="minesweeper-window"
+        data-window="minesweeper"
+      >
+        <div class="title-bar">
+          <div class="title-bar-text">Minesweeper</div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="game-container">
+            <div class="game-header">
+              <div class="game-counter">
+                <div class="counter-display" id="mine-counter">010</div>
+              </div>
+              <button class="game-reset" id="reset-game">😊</button>
+              <div class="game-counter">
+                <div class="counter-display" id="time-counter">000</div>
+              </div>
+            </div>
+            <div class="game-board" id="game-board">
+              <!-- Game grid will be generated by JavaScript -->
+            </div>
+            <div class="game-info">
+              <p>
+                Left click to reveal, right click to flag. Find all 10 mines!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clippy Assistant -->
+      <div class="clippy-container" id="clippy">
+        <div class="clippy-character">📎</div>
+        <div class="clippy-bubble">
+          <button class="clippy-close" id="clippy-close">×</button>
+          <p id="clippy-text">
+            Hi! I'm Clippy. It looks like you're viewing a portfolio. Would you
+            like some help?
+          </p>
+          <div class="clippy-tips" id="clippy-tips">
+            <button class="clippy-tip-btn" data-tip="navigation">
+              Show me around
+            </button>
+            <button class="clippy-tip-btn" data-tip="contact">
+              How to contact Justine?
+            </button>
+            <button class="clippy-tip-btn" data-tip="fun">
+              Show me something fun!
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Achievement Notification -->
+      <div class="achievement-notification" id="achievement">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-content">
+          <div class="achievement-title">Achievement Unlocked!</div>
+          <div class="achievement-description" id="achievement-text">
+            Explorer - Opened all windows
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Screen -->
+      <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+          <div class="xp-logo">
+            <div class="xp-logo-text">Microsoft</div>
+            <div class="xp-logo-subtext">
+              Windows<span class="xp-tm">XP</span>
+            </div>
+          </div>
+          <div class="loading-bar-container">
+            <div class="loading-bar">
+              <div class="loading-bar-fill"></div>
+            </div>
+          </div>
+          <div class="loading-text">Loading portfolio...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Windows XP Taskbar -->
+    <div class="taskbar">
+      <button class="start-button">
+        <svg
+          class="windows-logo"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 3.5L10 2v9H0V3.5zM11 1.8L24 0v11.5H11V1.8zM0 12.5h10v9l-10 1.5V12.5zM11 12.5h13V24l-13-1.8V12.5z"
+            fill="currentColor"
+          />
+        </svg>
+        <span>start</span>
+      </button>
+
+      <div class="taskbar-items">
+        <!-- Taskbar items will be added dynamically -->
+      </div>
+
+      <div class="system-tray">
+        <div class="tray-time" id="tray-time">12:00 PM</div>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="start-menu">
+      <div class="start-menu-header">
+        <div class="user-info">
+          <div class="user-avatar">J</div>
+          <span class="user-name">Justine</span>
+        </div>
+      </div>
+      <div class="start-menu-items">
+        <button class="start-menu-item" data-window="about">
+          <span class="menu-icon">👤</span>
+          <span>About Me</span>
+        </button>
+        <button class="start-menu-item" data-window="skills">
+          <span class="menu-icon">📊</span>
+          <span>Skills</span>
+        </button>
+        <button class="start-menu-item" data-window="projects">
+          <span class="menu-icon">💼</span>
+          <span>Projects</span>
+        </button>
+        <button class="start-menu-item" data-window="contact">
+          <span class="menu-icon">📧</span>
+          <span>Contact</span>
+        </button>
+        <div class="menu-separator"></div>
+        <button class="start-menu-item" data-window="terminal">
+          <span class="menu-icon">💻</span>
+          <span>Command Prompt</span>
+        </button>
+        <button class="start-menu-item" data-window="minesweeper">
+          <span class="menu-icon">🎮</span>
+          <span>Minesweeper</span>
+        </button>
+      </div>
+      <div class="start-menu-footer">
+        <button class="start-menu-item">
+          <span class="menu-icon">🔄</span>
+          <span>Restart</span>
+        </button>
+        <button class="start-menu-item" data-window="shutdown">
+          <span class="menu-icon">🔌</span>
+          <span>Shut Down</span>
+        </button>
+      </div>
+    </div>
+  </body>
+
+  <script src="script.js"></script>
+</html>
