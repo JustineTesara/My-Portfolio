@@ -489,9 +489,9 @@ Specializes in HTML, CSS, JavaScript, and modern web technologies.`;
     },
     social: () => {
       return `Social Media Links:
-  GitHub:   https://github.com/yourusername
-  LinkedIn: https://linkedin.com/in/yourusername
-  Twitter:  https://twitter.com/yourusername`;
+  GitHub:   https://github.com/JustineTesara
+  LinkedIn: https://www.linkedin.com/in/justine-tesara-a59674318/
+  Facebook:  https://www.facebook.com/justine.riosa.tesara`;
     },
     easteregg: () => {
       unlockAchievement("Secret Found!", "You found the hidden easter egg! 🎉");
@@ -932,3 +932,102 @@ console.log("✓ Clippy assistant");
 console.log("✓ Achievement system");
 console.log("✓ And more!");
 console.log("\nTry double-clicking the desktop icons!");
+
+/* ===================================
+   PROJECT VIEW SYSTEM
+   ================================== */
+
+function openProjectView(cardElement) {
+  // Extract data from the card
+  const projectData = {
+    id: cardElement.dataset.projectId,
+    title: cardElement.dataset.projectTitle,
+    description: cardElement.dataset.projectDescription,
+    image: cardElement.dataset.projectImage,
+    tech: cardElement.dataset.projectTech.split(","),
+    features: cardElement.dataset.projectFeatures.split("|"),
+    github: cardElement.dataset.projectGithub,
+    demo: cardElement.dataset.projectDemo,
+  };
+
+  // Populate the project view window
+  populateProjectView(projectData);
+
+  // Open the project view window
+  openWindow("project-view");
+}
+
+function populateProjectView(data) {
+  // Set title in window title bar
+  document.getElementById("project-view-title").textContent = data.title;
+
+  // Set heading
+  document.getElementById("project-view-heading").textContent = data.title;
+
+  // Set preview image
+  const previewImg = document.getElementById("project-preview-image");
+  previewImg.src = data.image;
+  previewImg.alt = data.title;
+
+  // Set description
+  document.getElementById("project-full-description").textContent =
+    data.description;
+
+  // Populate features list
+  const featuresList = document.getElementById("project-features-list");
+  featuresList.innerHTML = "";
+  data.features.forEach((feature) => {
+    const li = document.createElement("li");
+    li.textContent = feature;
+    featuresList.appendChild(li);
+  });
+
+  // Populate tech stack
+  const techList = document.getElementById("project-tech-list");
+  techList.innerHTML = "";
+  data.tech.forEach((tech) => {
+    const badge = document.createElement("span");
+    badge.className = "tech-badge";
+    badge.textContent = tech.trim();
+    techList.appendChild(badge);
+  });
+
+  // Set button links
+  const demoBtn = document.getElementById("project-demo-btn");
+  const githubBtn = document.getElementById("project-github-btn");
+
+  if (data.demo) {
+    demoBtn.href = data.demo;
+    demoBtn.style.display = "flex";
+  } else {
+    demoBtn.style.display = "none";
+  }
+
+  if (data.github) {
+    githubBtn.href = data.github;
+    githubBtn.style.display = "flex";
+  } else {
+    githubBtn.style.display = "none";
+  }
+
+  // Set project type based on tech
+  const projectType = document.getElementById("project-type");
+  if (data.tech.includes("Java")) {
+    projectType.textContent = "Desktop Application";
+  } else if (data.tech.includes("Node.js") || data.tech.includes("PHP")) {
+    projectType.textContent = "Full Stack Web App";
+  } else {
+    projectType.textContent = "Web Application";
+  }
+}
+
+function closeProjectView() {
+  const projectViewWindow = document.querySelector("#project-view-window");
+  closeWindow(projectViewWindow);
+}
+function shareProject() {
+  const url = window.location.href;
+  const title = document.getElementById("project-view-heading").textContent;
+  navigator.clipboard.writeText(url);
+  alert("Link copied to clipboard!");
+}

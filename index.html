@@ -284,143 +284,212 @@
             <button class="close-btn" aria-label="Close"></button>
           </div>
         </div>
-        <div class="window-body">
-          <div class="content-section">
-            <h2>Featured Projects</h2>
+        <div class="window-body browser-window">
+          <!-- Browser Toolbar -->
+          <div class="browser-toolbar">
+            <div class="browser-nav-buttons">
+              <button class="nav-btn">←</button>
+              <button class="nav-btn">→</button>
+              <button class="nav-btn">⟳</button>
+            </div>
+            <div class="browser-url-bar">
+              <span class="url-lock">🔒</span>
+              <span class="url-text">https://myprojects.dev</span>
+            </div>
+            <div class="browser-menu">
+              <button class="menu-btn">⋮</button>
+            </div>
+          </div>
 
-            <div class="projects-grid">
-              <div class="project-card">
-                <div class="project-header">
-                  <h3>Portfolio Website</h3>
+          <!-- Browser Tabs -->
+          <div class="browser-tabs">
+            <div class="browser-tab active">
+              <span class="tab-icon">📂</span>
+              <span class="tab-title">My Projects</span>
+            </div>
+            <div class="browser-tab">
+              <span class="tab-icon">+</span>
+            </div>
+          </div>
+
+          <!-- Browser Content Area -->
+          <div class="browser-content">
+            <div class="content-header">
+              <h2 class="youtube-style-title">My Projects Channel</h2>
+              <p class="channel-info">Showcasing my development work</p>
+            </div>
+
+            <!-- YouTube-Style Project Grid -->
+            <div
+              class="youtube-card"
+              onclick="openProjectView(this)"
+              data-project-id="journal"
+              data-project-title="Journal Blog Site"
+              data-project-description="A simple Journal Blog Site where users can create and publish their own journal entries. Features user authentication, CRUD operations, and a clean reading experience."
+              data-project-image="Pictures/journal-site.png"
+              data-project-tech="HTML,CSS,JavaScript,PHP,MySQL"
+              data-project-features="User authentication and authorization|Create, read, update, delete journal entries|Rich text editor for writing|Categories and tags for organization|Responsive design for all devices"
+              data-project-github="https://github.com/yourusername/journal-blog"
+              data-project-demo=""
+            >
+              <!-- Keep existing content inside -->
+              <div class="video-thumbnail">
+                <img
+                  src="/Pictures/JournalSite.jpg"
+                  alt="Journal Blog Site"
+                  class="thumbnail-image"
+                />
+                <div class="video-duration">Featured</div>
+              </div>
+              <!-- Video Info Area -->
+              <div class="video-info">
+                <h3 class="video-title">Journal Blog Site</h3>
+
+                <div class="video-meta">
+                  <span class="channel-name">Justine Dev</span>
+                  <span class="meta-separator">•</span>
+                  <span class="view-count">Full Stack Project</span>
                 </div>
-                <p class="project-description">
-                  A Windows XP-themed portfolio website built with vanilla HTML,
-                  CSS, and JavaScript. Features a nostalgic desktop interface
-                  with draggable windows and smooth animations.
+
+                <p class="video-description">
+                  A simple Journal Blog Site where users can create and publish
+                  their own journal entries. Features user authentication, CRUD
+                  operations, and a clean reading experience.
                 </p>
-                <div class="project-tags">
-                  <span class="tag">HTML</span>
-                  <span class="tag">CSS</span>
-                  <span class="tag">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Window: Project Detail View (YouTube-style) -->
+      <div
+        class="window project-view-window"
+        id="project-view-window"
+        data-window="project-view"
+      >
+        <div class="title-bar">
+          <div class="title-bar-text" id="project-view-title">
+            Project Details
+          </div>
+          <div class="title-bar-controls">
+            <button class="minimize-btn" aria-label="Minimize"></button>
+            <button class="maximize-btn" aria-label="Maximize"></button>
+            <button class="close-btn" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body project-view-body">
+          <!-- YouTube-style Layout -->
+          <div class="project-view-container">
+            <!-- Left Column: Video/Preview Area -->
+            <div class="project-preview-column">
+              <!-- Large Preview Image -->
+              <div class="project-preview-wrapper">
+                <img
+                  id="project-preview-image"
+                  src="/Pictures/JournalSite.jpg"
+                  alt="Project Preview"
+                  class="project-preview-img"
+                />
+              </div>
+
+              <!-- Project Title -->
+              <h2 class="project-view-heading" id="project-view-heading"></h2>
+              <div class="stat-item">
+                <span class="stat-label">Views:</span>
+                <span class="stat-value">1,337 views</span>
+              </div>
+              <div class="project-rating">
+                ⭐⭐⭐⭐⭐ <span>Self-Rated: Excellent</span>
+              </div>
+              <!-- Action Buttons -->
+              <button
+                onclick="shareProject()"
+                class="project-action-btn share-btn"
+              >
+                <span class="action-icon">📤</span>
+                <span>Share</span>
+              </button>
+              <div class="project-view-actions">
+                <a
+                  id="project-demo-btn"
+                  href="#"
+                  target="_blank"
+                  class="project-action-btn demo-btn"
+                >
+                  <span class="action-icon">🚀</span>
+                  <span>Live Demo</span>
+                </a>
+                <a
+                  id="project-github-btn"
+                  href="https://github.com/JustineTesara/Journal-Blog-Site"
+                  target="_blank"
+                  class="project-action-btn github-btn"
+                >
+                  <span class="action-icon">💻</span>
+                  <span>View Code</span>
+                </a>
+                <button
+                  onclick="closeProjectView()"
+                  class="project-action-btn back-btn"
+                >
+                  <span class="action-icon">←</span>
+                  <span>Back to Projects</span>
+                </button>
+              </div>
+
+              <!-- Description Section -->
+              <div class="project-description-section">
+                <h3 class="section-title">About This Project</h3>
+                <p
+                  id="project-full-description"
+                  class="project-description-text"
+                ></p>
+              </div>
+
+              <!-- Features Section -->
+              <div class="project-features-section">
+                <h3 class="section-title">Key Features</h3>
+                <ul id="project-features-list" class="features-list"></ul>
+              </div>
+            </div>
+
+            <!-- Right Column: Sidebar (Like YouTube) -->
+            <div class="project-sidebar-column">
+              <h3 class="sidebar-title">Technologies Used</h3>
+              <div id="project-tech-list" class="tech-badges-list"></div>
+
+              <div class="project-stats">
+                <h3 class="sidebar-title">Project Info</h3>
+                <div class="stat-item">
+                  <span class="stat-label">Status:</span>
+                  <span class="stat-value">Completed</span>
                 </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/yourusername/portfolio"
-                    target="_blank"
-                    class="xp-button"
+                <div class="stat-item">
+                  <span class="stat-label">Type:</span>
+                  <span class="stat-value" id="project-type"
+                    >Web Application</span
                   >
-                    <span class="button-icon">🔗</span> GitHub
-                  </a>
-                  <a
-                    href="https://yourportfolio.com"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🌐</span> Live Demo
-                  </a>
                 </div>
               </div>
 
-              <div class="project-card">
-                <div class="project-header">
-                  <h3>Weather Dashboard</h3>
-                </div>
-                <p class="project-description">
-                  A responsive weather application that displays current
-                  conditions and forecasts. Features location search and
-                  beautiful weather visualizations.
-                </p>
-                <div class="project-tags">
-                  <span class="tag">React</span>
-                  <span class="tag">API</span>
-                  <span class="tag">CSS</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/yourusername/weather-app"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🔗</span> GitHub
-                  </a>
-                  <a
-                    href="https://weather.yoursite.com"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🌐</span> Live Demo
-                  </a>
-                </div>
-              </div>
-
-              <div class="project-card">
-                <div class="project-header">
-                  <h3>Task Manager</h3>
-                </div>
-                <p class="project-description">
-                  A productivity app for managing daily tasks with categories,
-                  priorities, and deadlines. Includes local storage for
-                  persistence.
-                </p>
-                <div class="project-tags">
-                  <span class="tag">JavaScript</span>
-                  <span class="tag">LocalStorage</span>
-                  <span class="tag">CSS Grid</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/yourusername/task-manager"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🔗</span> GitHub
-                  </a>
-                  <a
-                    href="https://tasks.yoursite.com"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🌐</span> Live Demo
-                  </a>
-                </div>
-              </div>
-
-              <div class="project-card">
-                <div class="project-header">
-                  <h3>Landing Page Design</h3>
-                </div>
-                <p class="project-description">
-                  A modern, animated landing page with smooth scroll effects and
-                  responsive design. Built with accessibility and performance in
-                  mind.
-                </p>
-                <div class="project-tags">
-                  <span class="tag">HTML5</span>
-                  <span class="tag">SCSS</span>
-                  <span class="tag">Animation</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://github.com/yourusername/landing-page"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🔗</span> GitHub
-                  </a>
-                  <a
-                    href="https://landing.yoursite.com"
-                    target="_blank"
-                    class="xp-button"
-                  >
-                    <span class="button-icon">🌐</span> Live Demo
-                  </a>
+              <!-- Related Projects Section -->
+              <div class="related-projects">
+                <h3 class="sidebar-title">More Projects</h3>
+                <div
+                  class="related-project-item"
+                  onclick="openWindow('projects')"
+                >
+                  <div class="related-thumb">📂</div>
+                  <div class="related-info">
+                    <p class="related-title">View All Projects</p>
+                    <p class="related-meta">See my other work</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- Window: Contact -->
       <div class="window" id="contact-window" data-window="contact">
         <div class="title-bar">
