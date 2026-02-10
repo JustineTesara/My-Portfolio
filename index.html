@@ -294,7 +294,7 @@
             </div>
             <div class="browser-url-bar">
               <span class="url-lock">🔒</span>
-              <span class="url-text">https://myprojects.dev</span>
+              <span class="url-text">https://justine-dev-projects.com</span>
             </div>
             <div class="browser-menu">
               <button class="menu-btn">⋮</button>
@@ -320,42 +320,122 @@
             </div>
 
             <!-- YouTube-Style Project Grid -->
-            <div
-              class="youtube-card"
-              onclick="openProjectView(this)"
-              data-project-id="journal"
-              data-project-title="Journal Blog Site"
-              data-project-description="A simple Journal Blog Site where users can create and publish their own journal entries. Features user authentication, CRUD operations, and a clean reading experience."
-              data-project-image="Pictures/journal-site.png"
-              data-project-tech="HTML,CSS,JavaScript,PHP,MySQL"
-              data-project-features="User authentication and authorization|Create, read, update, delete journal entries|Rich text editor for writing|Categories and tags for organization|Responsive design for all devices"
-              data-project-github="https://github.com/yourusername/journal-blog"
-              data-project-demo=""
-            >
-              <!-- Keep existing content inside -->
-              <div class="video-thumbnail">
-                <img
-                  src="/Pictures/JournalSite.jpg"
-                  alt="Journal Blog Site"
-                  class="thumbnail-image"
-                />
-                <div class="video-duration">Featured</div>
-              </div>
-              <!-- Video Info Area -->
-              <div class="video-info">
-                <h3 class="video-title">Journal Blog Site</h3>
+            <div class="youtube-grid">
+              <div
+                class="youtube-card"
+                onclick="openProjectView(this)"
+                data-project-id="journal"
+                data-project-title="Journal Blog Site"
+                data-project-description="A simple Journal Blog Site where users can create and publish their own journal entries. Features user authentication, CRUD operations, and a clean reading experience."
+                data-project-image="Pictures/journal-site.png"
+                data-project-tech="HTML,CSS,JavaScript,PHP,MySQL"
+                data-project-features="User authentication and authorization|Create, read, update, delete journal entries|Rich text editor for writing|Categories and tags for organization|Responsive design for all devices"
+                data-project-github="https://github.com/JustineTesara/Journal-Blog-Site"
+                data-project-demo=""
+              >
+                <!-- Keep existing content inside -->
+                <div class="video-thumbnail">
+                  <img
+                    src="Pictures/JournalSite.jpg"
+                    alt="Journal Blog Site"
+                    class="thumbnail-image"
+                  />
+                  <div class="video-duration">Featured</div>
+                </div>
+                <!-- Video Info Area -->
+                <div class="video-info">
+                  <h3 class="video-title">Journal Blog Site</h3>
 
-                <div class="video-meta">
-                  <span class="channel-name">Justine Dev</span>
-                  <span class="meta-separator">•</span>
-                  <span class="view-count">Full Stack Project</span>
+                  <div class="video-meta">
+                    <span class="channel-name">Justine Dev</span>
+                    <span class="meta-separator">•</span>
+                    <span class="view-count">Full Stack Project</span>
+                  </div>
+
+                  <p class="video-description">
+                    A simple Journal Blog Site where users can create and
+                    publish their own journal entries. Features user
+                    authentication, CRUD operations, and a clean reading
+                    experience.
+                  </p>
+
+                  <!-- Tech Stack Tags -->
+                  <div class="tech-stack">
+                    <span class="tech-tag">EJS</span>
+                    <span class="tech-tag">Express.js/Node.js</span>
+                    <span class="tech-tag">CSS3</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PROJECT 2: PipWise V2 -->
+              <div
+                class="youtube-card"
+                onclick="openProjectView(this)"
+                data-project-id="pipwise-v2"
+                data-project-title="PipWise V2 – Forex Trader Companion"
+                data-project-description="A lightweight forex trader companion app designed for risk management, position sizing, and strategy analysis. Features real-time forex data, portfolio risk management tools, and comprehensive trading calculators to help traders make informed decisions."
+                data-project-image="Pictures/pipwise-v2.png"
+                data-project-tech="HTML,CSS,JavaScript,Node.js,Express.js,Alpha Vantage API"
+                data-project-features="Position size calculator for optimal trade sizing|Trading cost calculator (spread, commission, swap)|Portfolio risk manager with real-time P&L tracking|Strategy expectancy analyzer for win rate analysis|Dark mode and Light mode theme switcher|Real-time forex data integration via Alpha Vantage API|Responsive design for desktop and mobile trading"
+                data-project-github="https://github.com/JustineTesara/PipWise-V2"
+                data-project-demo=""
+              >
+                <!-- Thumbnail Area -->
+                <div class="video-thumbnail">
+                  <!-- If you have screenshot: -->
+                  <img
+                    src="Pictures/pipwise-v2.jpg"
+                    alt="PipWise V2"
+                    class="thumbnail-image"
+                  />
+
+                  <!-- If NO screenshot, use this instead: -->
+                  <!-- 
+            <div class="thumbnail-placeholder" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                <span class="project-icon">📈</span>
+            </div>
+            -->
+
+                  <div class="video-duration">Featured</div>
                 </div>
 
-                <p class="video-description">
-                  A simple Journal Blog Site where users can create and publish
-                  their own journal entries. Features user authentication, CRUD
-                  operations, and a clean reading experience.
-                </p>
+                <!-- Video Info Area -->
+                <div class="video-info">
+                  <h3 class="video-title">
+                    PipWise V2 – Forex Trader Companion
+                  </h3>
+
+                  <div class="video-meta">
+                    <span class="channel-name">Justine Dev</span>
+                    <span class="meta-separator">•</span>
+                    <span class="view-count">Full Stack Project</span>
+                  </div>
+
+                  <p class="video-description">
+                    Professional forex trading companion with risk management,
+                    calculators, and real-time market data.
+                  </p>
+
+                  <!-- Tech Stack Tags -->
+                  <div class="tech-stack">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Express.js</span>
+                    <span class="tech-tag">Alpha Vantage API</span>
+                  </div>
+
+                  <!-- Action Buttons (Hidden in card view, shown in detail view) -->
+                  <div class="video-actions" style="display: none">
+                    <a
+                      href="https://github.com/JustineTesara/PipWise-V2"
+                      target="_blank"
+                      class="action-btn"
+                    >
+                      <span class="btn-icon">💻</span> GitHub
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -386,7 +466,7 @@
               <div class="project-preview-wrapper">
                 <img
                   id="project-preview-image"
-                  src="/Pictures/JournalSite.jpg"
+                  src="Pictures/JournalSite.jpg"
                   alt="Project Preview"
                   class="project-preview-img"
                 />
@@ -421,7 +501,7 @@
                 </a>
                 <a
                   id="project-github-btn"
-                  href="https://github.com/JustineTesara/Journal-Blog-Site"
+                  href="#"
                   target="_blank"
                   class="project-action-btn github-btn"
                 >
@@ -462,13 +542,19 @@
                 <h3 class="sidebar-title">Project Info</h3>
                 <div class="stat-item">
                   <span class="stat-label">Status:</span>
-                  <span class="stat-value">Completed</span>
+                  <span class="stat-value">✅ Completed</span>
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">Type:</span>
-                  <span class="stat-value" id="project-type"
-                    >Web Application</span
-                  >
+                  <span class="stat-value" id="project-type">Full Stack</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Year:</span>
+                  <span class="stat-value">2026</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Role:</span>
+                  <span class="stat-value">Solo Developer</span>
                 </div>
               </div>
 
@@ -830,10 +916,10 @@
       </div>
       <div class="start-menu-footer">
         <button class="start-menu-item">
-          <span class="menu-icon">🔄</span>
+          <span class="menu-icon" onclick="location.reload()">🔄</span>
           <span>Restart</span>
         </button>
-        <button class="start-menu-item" data-window="shutdown">
+        <button class="start-menu-item" onclick="shutdownPortfolio()">
           <span class="menu-icon">🔌</span>
           <span>Shut Down</span>
         </button>

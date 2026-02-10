@@ -1480,9 +1480,51 @@ body.dragging {
     box-shadow 0.2s ease;
 }
 
+.youtube-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
 .youtube-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.youtube-card:hover .video-title {
+  color: #065fd4;
+}
+
+.youtube-card:hover .thumbnail-image {
+  transform: scale(1.05);
+}
+
+.thumbnail-image {
+  transition: transform 0.3s ease;
+}
+
+.youtube-card {
+  cursor: pointer;
+  position: relative;
+}
+
+.youtube-card::after {
+  content: "Click to view details";
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.youtube-card:hover::after {
+  opacity: 1;
 }
 
 /* Thumbnail */
@@ -1794,14 +1836,37 @@ body.dragging {
   border-bottom: 1px solid #f0f0f0;
 }
 
+.features-list li {
+  padding: 12px 0;
+  padding-left: 35px;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #030303;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s ease;
+}
+
+.features-list li:hover {
+  background: #f9f9f9;
+  padding-left: 40px;
+}
+
 .features-list li:before {
   content: "✓";
   position: absolute;
-  left: 0;
-  top: 10px;
-  color: #065fd4;
+  left: 8px;
+  top: 12px;
+  color: #fff;
+  background: #065fd4;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .features-list li:last-child {

@@ -1014,8 +1014,14 @@ function populateProjectView(data) {
   const projectType = document.getElementById("project-type");
   if (data.tech.includes("Java")) {
     projectType.textContent = "Desktop Application";
-  } else if (data.tech.includes("Node.js") || data.tech.includes("PHP")) {
+  } else if (
+    data.tech.includes("Node.js") ||
+    data.tech.includes("PHP") ||
+    data.tech.includes("Express")
+  ) {
     projectType.textContent = "Full Stack Web App";
+  } else if (data.tech.includes("React") || data.tech.includes("Vue")) {
+    projectType.textContent = "Frontend Framework";
   } else {
     projectType.textContent = "Web Application";
   }
@@ -1030,4 +1036,87 @@ function shareProject() {
   const title = document.getElementById("project-view-heading").textContent;
   navigator.clipboard.writeText(url);
   alert("Link copied to clipboard!");
+}
+
+/* ===================================
+   Shutdown Animation
+   ================================== */
+function shutdownPortfolio() {
+  // Close all windows
+  document.querySelectorAll(".window.active").forEach((window) => {
+    window.classList.remove("active");
+  });
+
+  // Close start menu
+  document.getElementById("start-menu").classList.remove("active");
+
+  // Show shutdown screen
+  const shutdownScreen = document.createElement("div");
+  shutdownScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0055d4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 99999;
+        color: white;
+        font-family: Tahoma, sans-serif;
+    `;
+
+  shutdownScreen.innerHTML = `
+        <div style="font-size: 24px; margin-bottom: 20px;">Windows is shutting down...</div>
+        <div style="font-size: 14px;">It's now safe to close this window</div>
+    `;
+
+  document.body.appendChild(shutdownScreen);
+
+  // Optional: Reload after 3 seconds
+  setTimeout(() => {
+    location.reload();
+  }, 3000);
+}
+
+/* ===================================
+   Share Project Function
+   ================================== */
+function shareProject() {
+  const projectTitle = document.getElementById(
+    "project-view-heading",
+  ).textContent;
+  const url = window.location.href;
+
+  // Create share text
+  const shareText = `Check out my project: ${projectTitle}`;
+
+  // Try to use Web Share API (works on mobile and some browsers)
+  if (navigator.share) {
+    navigator
+      .share({
+        title: projectTitle,
+        text: shareText,
+        url: url,
+      })
+      .then(() => {
+        console.log("Thanks for sharing!");
+      })
+      .catch((err) => {
+        console.log("Error sharing:", err);
+      });
+  } else {
+    // Fallback: Copy to clipboard
+    const tempInput = document.createElement("input");
+    tempInput.value = `${shareText} - ${url}`;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    // Show Windows XP-style alert
+    alert("✅ Link copied to clipboard!\n\nShare this project with others!");
+  }
 }
