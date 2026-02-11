@@ -286,15 +286,23 @@
         </div>
         <div class="window-body browser-window">
           <!-- Browser Toolbar -->
+          <!-- Browser Toolbar -->
           <div class="browser-toolbar">
             <div class="browser-nav-buttons">
-              <button class="nav-btn">←</button>
-              <button class="nav-btn">→</button>
-              <button class="nav-btn">⟳</button>
+              <button class="nav-btn" id="browser-back" disabled>←</button>
+              <button class="nav-btn" id="browser-forward" disabled>→</button>
+              <button class="nav-btn" id="browser-refresh">⟳</button>
             </div>
-            <div class="browser-url-bar">
+            <div class="browser-url-bar" id="browser-url-bar">
               <span class="url-lock">🔒</span>
-              <span class="url-text">https://justine-dev-projects.com</span>
+              <input
+                type="text"
+                class="url-input"
+                id="url-input"
+                value="https://justine-dev-projects.com"
+                readonly
+              />
+              <button class="url-go-btn" id="url-go-btn">Go</button>
             </div>
             <div class="browser-menu">
               <button class="menu-btn">⋮</button>
@@ -303,141 +311,30 @@
 
           <!-- Browser Tabs -->
           <div class="browser-tabs">
-            <div class="browser-tab active">
+            <div class="browser-tab active" id="main-tab">
               <span class="tab-icon">📂</span>
               <span class="tab-title">My Projects</span>
-            </div>
-            <div class="browser-tab">
-              <span class="tab-icon">+</span>
             </div>
           </div>
 
           <!-- Browser Content Area -->
-          <div class="browser-content">
+          <div class="browser-content" id="browser-content">
             <div class="content-header">
               <h2 class="youtube-style-title">My Projects Channel</h2>
               <p class="channel-info">Showcasing my development work</p>
             </div>
 
             <!-- YouTube-Style Project Grid -->
-            <div class="youtube-grid">
-              <div
-                class="youtube-card"
-                onclick="openProjectView(this)"
-                data-project-id="journal"
-                data-project-title="Journal Blog Site"
-                data-project-description="A simple Journal Blog Site where users can create and publish their own journal entries. Features user authentication, CRUD operations, and a clean reading experience."
-                data-project-image="Pictures/journal-site.png"
-                data-project-tech="HTML,CSS,JavaScript,PHP,MySQL"
-                data-project-features="User authentication and authorization|Create, read, update, delete journal entries|Rich text editor for writing|Categories and tags for organization|Responsive design for all devices"
-                data-project-github="https://github.com/JustineTesara/Journal-Blog-Site"
-                data-project-demo=""
-              >
-                <!-- Keep existing content inside -->
-                <div class="video-thumbnail">
-                  <img
-                    src="Pictures/JournalSite.jpg"
-                    alt="Journal Blog Site"
-                    class="thumbnail-image"
-                  />
-                  <div class="video-duration">Featured</div>
-                </div>
-                <!-- Video Info Area -->
-                <div class="video-info">
-                  <h3 class="video-title">Journal Blog Site</h3>
-
-                  <div class="video-meta">
-                    <span class="channel-name">Justine Dev</span>
-                    <span class="meta-separator">•</span>
-                    <span class="view-count">Full Stack Project</span>
-                  </div>
-
-                  <p class="video-description">
-                    A simple Journal Blog Site where users can create and
-                    publish their own journal entries. Features user
-                    authentication, CRUD operations, and a clean reading
-                    experience.
-                  </p>
-
-                  <!-- Tech Stack Tags -->
-                  <div class="tech-stack">
-                    <span class="tech-tag">EJS</span>
-                    <span class="tech-tag">Express.js/Node.js</span>
-                    <span class="tech-tag">CSS3</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- PROJECT 2: PipWise V2 -->
-              <div
-                class="youtube-card"
-                onclick="openProjectView(this)"
-                data-project-id="pipwise-v2"
-                data-project-title="PipWise V2 – Forex Trader Companion"
-                data-project-description="A lightweight forex trader companion app designed for risk management, position sizing, and strategy analysis. Features real-time forex data, portfolio risk management tools, and comprehensive trading calculators to help traders make informed decisions."
-                data-project-image="Pictures/pipwise-v2.png"
-                data-project-tech="HTML,CSS,JavaScript,Node.js,Express.js,Alpha Vantage API"
-                data-project-features="Position size calculator for optimal trade sizing|Trading cost calculator (spread, commission, swap)|Portfolio risk manager with real-time P&L tracking|Strategy expectancy analyzer for win rate analysis|Dark mode and Light mode theme switcher|Real-time forex data integration via Alpha Vantage API|Responsive design for desktop and mobile trading"
-                data-project-github="https://github.com/JustineTesara/PipWise-V2"
-                data-project-demo=""
-              >
-                <!-- Thumbnail Area -->
-                <div class="video-thumbnail">
-                  <!-- If you have screenshot: -->
-                  <img
-                    src="Pictures/pipwise-v2.jpg"
-                    alt="PipWise V2"
-                    class="thumbnail-image"
-                  />
-
-                  <!-- If NO screenshot, use this instead: -->
-                  <!-- 
-            <div class="thumbnail-placeholder" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                <span class="project-icon">📈</span>
-            </div>
-            -->
-
-                  <div class="video-duration">Featured</div>
-                </div>
-
-                <!-- Video Info Area -->
-                <div class="video-info">
-                  <h3 class="video-title">
-                    PipWise V2 – Forex Trader Companion
-                  </h3>
-
-                  <div class="video-meta">
-                    <span class="channel-name">Justine Dev</span>
-                    <span class="meta-separator">•</span>
-                    <span class="view-count">Full Stack Project</span>
-                  </div>
-
-                  <p class="video-description">
-                    Professional forex trading companion with risk management,
-                    calculators, and real-time market data.
-                  </p>
-
-                  <!-- Tech Stack Tags -->
-                  <div class="tech-stack">
-                    <span class="tech-tag">JavaScript</span>
-                    <span class="tech-tag">Node.js</span>
-                    <span class="tech-tag">Express.js</span>
-                    <span class="tech-tag">Alpha Vantage API</span>
-                  </div>
-
-                  <!-- Action Buttons (Hidden in card view, shown in detail view) -->
-                  <div class="video-actions" style="display: none">
-                    <a
-                      href="https://github.com/JustineTesara/PipWise-V2"
-                      target="_blank"
-                      class="action-btn"
-                    >
-                      <span class="btn-icon">💻</span> GitHub
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="youtube-grid"></div>
+          </div>
+          <!-- Loading Indicator -->
+          <div
+            class="browser-loading"
+            id="browser-loading"
+            style="display: none"
+          >
+            <div class="loading-spinner"></div>
+            <p>Loading...</p>
           </div>
         </div>
       </div>
@@ -550,7 +447,7 @@
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">Year:</span>
-                  <span class="stat-value">2026</span>
+                  <span class="stat-value" id="project-year">2025</span>
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">Role:</span>

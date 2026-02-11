@@ -344,6 +344,16 @@ function addTaskbarItem(windowId) {
     }
   });
 
+  // Inside addTaskbarItem
+  const iconSrc = window.querySelector(".title-bar img")?.src;
+  if (iconSrc) {
+    const img = document.createElement("img");
+    img.src = iconSrc;
+    img.style.width = "16px";
+    img.style.marginRight = "5px";
+    taskbarItem.prepend(img);
+  }
+
   taskbarItems.appendChild(taskbarItem);
 }
 
@@ -551,6 +561,23 @@ Type 'help' for available commands.`;
       terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
   });
+
+  crash: () => {
+    const bsod = document.createElement("div");
+    bsod.style.cssText =
+      "position:fixed;top:0;left:0;width:100%;height:100%;background:#0000aa;color:#ffffff;font-family:monospace;padding:50px;z-index:999999;font-size:1.2rem;";
+    bsod.innerHTML = `
+    <p>A problem has been detected and Windows has been shut down to prevent damage to your computer.</p>
+    <p>UNEXPECTED_KERNEL_MODE_TRAP</p>
+    <p>If this is the first time you've seen this Stop error screen, restart your computer.</p>
+    <p>Press any key to restart...</p>
+  `;
+    document.body.appendChild(bsod);
+    document.addEventListener("keydown", () => location.reload(), {
+      once: true,
+    });
+    return "Initiating system crash...";
+  };
 }
 
 /* ===================================
@@ -933,104 +960,6 @@ console.log("✓ Achievement system");
 console.log("✓ And more!");
 console.log("\nTry double-clicking the desktop icons!");
 
-/* ===================================
-   PROJECT VIEW SYSTEM
-   ================================== */
-
-function openProjectView(cardElement) {
-  // Extract data from the card
-  const projectData = {
-    id: cardElement.dataset.projectId,
-    title: cardElement.dataset.projectTitle,
-    description: cardElement.dataset.projectDescription,
-    image: cardElement.dataset.projectImage,
-    tech: cardElement.dataset.projectTech.split(","),
-    features: cardElement.dataset.projectFeatures.split("|"),
-    github: cardElement.dataset.projectGithub,
-    demo: cardElement.dataset.projectDemo,
-  };
-
-  // Populate the project view window
-  populateProjectView(projectData);
-
-  // Open the project view window
-  openWindow("project-view");
-}
-
-function populateProjectView(data) {
-  // Set title in window title bar
-  document.getElementById("project-view-title").textContent = data.title;
-
-  // Set heading
-  document.getElementById("project-view-heading").textContent = data.title;
-
-  // Set preview image
-  const previewImg = document.getElementById("project-preview-image");
-  previewImg.src = data.image;
-  previewImg.alt = data.title;
-
-  // Set description
-  document.getElementById("project-full-description").textContent =
-    data.description;
-
-  // Populate features list
-  const featuresList = document.getElementById("project-features-list");
-  featuresList.innerHTML = "";
-  data.features.forEach((feature) => {
-    const li = document.createElement("li");
-    li.textContent = feature;
-    featuresList.appendChild(li);
-  });
-
-  // Populate tech stack
-  const techList = document.getElementById("project-tech-list");
-  techList.innerHTML = "";
-  data.tech.forEach((tech) => {
-    const badge = document.createElement("span");
-    badge.className = "tech-badge";
-    badge.textContent = tech.trim();
-    techList.appendChild(badge);
-  });
-
-  // Set button links
-  const demoBtn = document.getElementById("project-demo-btn");
-  const githubBtn = document.getElementById("project-github-btn");
-
-  if (data.demo) {
-    demoBtn.href = data.demo;
-    demoBtn.style.display = "flex";
-  } else {
-    demoBtn.style.display = "none";
-  }
-
-  if (data.github) {
-    githubBtn.href = data.github;
-    githubBtn.style.display = "flex";
-  } else {
-    githubBtn.style.display = "none";
-  }
-
-  // Set project type based on tech
-  const projectType = document.getElementById("project-type");
-  if (data.tech.includes("Java")) {
-    projectType.textContent = "Desktop Application";
-  } else if (
-    data.tech.includes("Node.js") ||
-    data.tech.includes("PHP") ||
-    data.tech.includes("Express")
-  ) {
-    projectType.textContent = "Full Stack Web App";
-  } else if (data.tech.includes("React") || data.tech.includes("Vue")) {
-    projectType.textContent = "Frontend Framework";
-  } else {
-    projectType.textContent = "Web Application";
-  }
-}
-
-function closeProjectView() {
-  const projectViewWindow = document.querySelector("#project-view-window");
-  closeWindow(projectViewWindow);
-}
 function shareProject() {
   const url = window.location.href;
   const title = document.getElementById("project-view-heading").textContent;
@@ -1120,3 +1049,415 @@ function shareProject() {
     alert("✅ Link copied to clipboard!\n\nShare this project with others!");
   }
 }
+/* ===================================
+   Image Error Handling
+   ================================== */
+document.addEventListener("DOMContentLoaded", function () {
+  // Handle image loading errors
+  const images = document.querySelectorAll("img");
+  images.forEach((img) => {
+    img.addEventListener("error", function () {
+      console.error("Failed to load image:", this.src);
+      // Replace with placeholder
+      this.style.display = "none";
+
+      // Create placeholder
+      const placeholder = document.createElement("div");
+      placeholder.style.cssText = `
+                width: 100%;
+                height: 300px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 48px;
+            `;
+      placeholder.textContent = "📊";
+
+      if (this.parentElement) {
+        this.parentElement.appendChild(placeholder);
+      }
+    });
+  });
+});
+/* ===================================
+   BROWSER NAVIGATION SYSTEM
+   ================================== */
+
+// Browser state management
+const browserState = {
+  history: [],
+  currentIndex: -1,
+  pages: {},
+};
+
+// Initialize browser on load
+function initializeBrowser() {
+  // Register pages
+  browserState.pages = {
+    home: renderProjectsHome,
+    search: renderSearchResults,
+    project: renderProjectDetail,
+  };
+
+  // Load home page
+  navigateTo("home");
+
+  // Setup event listeners
+  setupBrowserControls();
+}
+
+// Navigation function
+function navigateTo(page, data = {}) {
+  // Add to history
+  if (browserState.currentIndex < browserState.history.length - 1) {
+    browserState.history = browserState.history.slice(
+      0,
+      browserState.currentIndex + 1,
+    );
+  }
+
+  browserState.history.push({ page, data });
+  browserState.currentIndex++;
+
+  // Render page
+  renderPage(page, data);
+
+  // Update controls
+  updateBrowserControls();
+}
+
+// Render page
+function renderPage(page, data) {
+  const content = document.getElementById("browser-content");
+  const loading = document.getElementById("browser-loading");
+
+  // Show loading
+  loading.style.display = "block";
+
+  setTimeout(() => {
+    // Render content
+    if (browserState.pages[page]) {
+      content.innerHTML = "";
+      content.appendChild(browserState.pages[page](data));
+    }
+
+    // Update URL bar
+    updateURLBar(page, data);
+
+    // Hide loading
+    loading.style.display = "none";
+  }, 300);
+}
+
+// Update URL bar
+function updateURLBar(page, data) {
+  const urlInput = document.getElementById("url-input");
+
+  const urls = {
+    home: "https://justine-dev-projects.com",
+    search: `https://justine-dev-projects.com/search?q=${data.query || ""}`,
+    project: `https://justine-dev-projects.com/project/${data.id || ""}`,
+  };
+
+  urlInput.value = urls[page] || "https://justine-dev-projects.com";
+}
+
+// Browser controls
+function setupBrowserControls() {
+  const backBtn = document.getElementById("browser-back");
+  const forwardBtn = document.getElementById("browser-forward");
+  const refreshBtn = document.getElementById("browser-refresh");
+  const goBtn = document.getElementById("url-go-btn");
+  const urlInput = document.getElementById("url-input");
+
+  backBtn.addEventListener("click", () => {
+    if (browserState.currentIndex > 0) {
+      browserState.currentIndex--;
+      const { page, data } = browserState.history[browserState.currentIndex];
+      renderPage(page, data);
+      updateBrowserControls();
+    }
+  });
+
+  forwardBtn.addEventListener("click", () => {
+    if (browserState.currentIndex < browserState.history.length - 1) {
+      browserState.currentIndex++;
+      const { page, data } = browserState.history[browserState.currentIndex];
+      renderPage(page, data);
+      updateBrowserControls();
+    }
+  });
+
+  refreshBtn.addEventListener("click", () => {
+    const { page, data } = browserState.history[browserState.currentIndex];
+    renderPage(page, data);
+  });
+
+  // Search functionality
+  goBtn.addEventListener("click", handleSearch);
+  urlInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+
+  // Make URL bar editable on click
+  urlInput.addEventListener("click", function () {
+    this.readOnly = false;
+    this.select();
+  });
+
+  urlInput.addEventListener("blur", function () {
+    this.readOnly = true;
+  });
+}
+
+function handleSearch() {
+  const urlInput = document.getElementById("url-input");
+  const query = urlInput.value.toLowerCase();
+
+  // Check for keywords
+  if (query.includes("resume") || query.includes("cv")) {
+    navigateTo("search", { query: "resume", type: "resume" });
+  } else if (query.includes("project")) {
+    navigateTo("home");
+  } else if (query.includes("facebook") || query.includes("fb")) {
+    navigateTo("search", { query: "facebook", type: "social" });
+  } else {
+    navigateTo("search", { query: query });
+  }
+}
+
+function updateBrowserControls() {
+  const backBtn = document.getElementById("browser-back");
+  const forwardBtn = document.getElementById("browser-forward");
+
+  backBtn.disabled = browserState.currentIndex <= 0;
+  forwardBtn.disabled =
+    browserState.currentIndex >= browserState.history.length - 1;
+}
+
+// Page Renderers
+function renderProjectsHome() {
+  const container = document.createElement("div");
+  container.className = "browser-content";
+
+  container.innerHTML = `
+    <div class="content-header">
+      <h2 class="youtube-style-title">My Projects Channel</h2>
+      <p class="channel-info">Showcasing my development work</p>
+    </div>
+    
+    <div class="youtube-grid" id="projects-grid">
+      <!-- Projects will be inserted here -->
+    </div>
+  `;
+
+  // Add projects
+  const grid = container.querySelector("#projects-grid");
+
+  // Project 1: Journal Blog Site
+  grid.appendChild(
+    createProjectCard({
+      id: "journal",
+      title: "Journal Blog Site",
+      description:
+        "A simple Journal Blog Site where users can create and publish their own journal entries.",
+      image: "Pictures/JournalSite.jpg",
+      tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+      features: [
+        "User authentication and authorization",
+        "Create, read, update, delete journal entries",
+        "Rich text editor for writing",
+        "Categories and tags for organization",
+        "Responsive design for all devices",
+      ],
+      github: "https://github.com/JustineTesara/Journal-Blog-Site",
+    }),
+  );
+
+  // Project 2: PipWise V2
+  grid.appendChild(
+    createProjectCard({
+      id: "pipwise-v2",
+      title: "PipWise V2 – Forex Trader Companion",
+      description:
+        "A lightweight forex trader companion app designed for risk management and strategy analysis.",
+      image: "Pictures/pipwise-v2.jpg",
+      tech: [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Node.js",
+        "Express.js",
+        "Alpha Vantage API",
+      ],
+      features: [
+        "Position size calculator for optimal trade sizing",
+        "Trading cost calculator (spread, commission, swap)",
+        "Portfolio risk manager with real-time P&L tracking",
+        "Strategy expectancy analyzer",
+        "Dark mode and Light mode theme switcher",
+        "Real-time forex data integration",
+      ],
+      github: "https://github.com/JustineTesara/PipWise-V2",
+    }),
+  );
+
+  return container;
+}
+
+function createProjectCard(project) {
+  const card = document.createElement("div");
+  card.className = "youtube-card";
+
+  card.innerHTML = `
+    <div class="video-thumbnail">
+      <img src="${project.image}" alt="${project.title}" class="thumbnail-image" />
+      <div class="video-duration">Featured</div>
+    </div>
+    <div class="video-info">
+      <h3 class="video-title">${project.title}</h3>
+      <div class="video-meta">
+        <span class="channel-name">Justine Dev</span>
+        <span class="meta-separator">•</span>
+        <span class="view-count">Full Stack Project</span>
+      </div>
+      <p class="video-description">${project.description}</p>
+      <div class="tech-stack">
+        ${project.tech.map((tech) => `<span class="tech-tag">${tech}</span>`).join("")}
+      </div>
+    </div>
+  `;
+
+  card.addEventListener("click", () => {
+    navigateTo("project", project);
+  });
+
+  return card;
+}
+
+function renderProjectDetail(project) {
+  const container = document.createElement("div");
+  container.className = "project-view-container";
+
+  container.innerHTML = `
+    <div class="project-preview-column">
+      <div class="project-preview-wrapper">
+        <img src="${project.image}" alt="${project.title}" class="project-preview-img" />
+      </div>
+      
+      <h2 class="project-view-heading">${project.title}</h2>
+      
+      <div class="project-view-actions">
+        ${
+          project.demo
+            ? `<a href="${project.demo}" target="_blank" class="project-action-btn demo-btn">
+          <span class="action-icon">🚀</span><span>Live Demo</span>
+        </a>`
+            : ""
+        }
+        ${
+          project.github
+            ? `<a href="${project.github}" target="_blank" class="project-action-btn github-btn">
+          <span class="action-icon">💻</span><span>View Code</span>
+        </a>`
+            : ""
+        }
+        <button onclick="navigateTo('home')" class="project-action-btn back-btn">
+          <span class="action-icon">←</span><span>Back to Projects</span>
+        </button>
+      </div>
+      
+      <div class="project-description-section">
+        <h3 class="section-title">About This Project</h3>
+        <p class="project-description-text">${project.description}</p>
+      </div>
+      
+      <div class="project-features-section">
+        <h3 class="section-title">Key Features</h3>
+        <ul class="features-list">
+          ${project.features.map((f) => `<li>${f}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="project-sidebar-column">
+      <h3 class="sidebar-title">Technologies Used</h3>
+      <div class="tech-badges-list">
+        ${project.tech.map((t) => `<span class="tech-badge">${t}</span>`).join("")}
+      </div>
+      
+      <div class="project-stats">
+        <h3 class="sidebar-title">Project Info</h3>
+        <div class="stat-item">
+          <span class="stat-label">Status:</span>
+          <span class="stat-value">✅ Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Type:</span>
+          <span class="stat-value">Full Stack</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Year:</span>
+          <span class="stat-value">2025</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return container;
+}
+
+function renderSearchResults(data) {
+  const container = document.createElement("div");
+
+  if (data.type === "resume") {
+    // Old Facebook style for resume search
+    container.innerHTML = `
+      <div style="background: #3b5998; padding: 20px; color: white; font-family: Arial;">
+        <h1 style="font-size: 24px; margin: 0;">facebook</h1>
+      </div>
+      <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
+        <div style="background: white; border: 1px solid #ddd; padding: 20px; border-radius: 3px;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 100px; height: 100px; background: #4A90E2; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white;">
+              J
+            </div>
+            <h2 style="margin: 0; color: #333;">Justine Tesara</h2>
+            <p style="color: #666; margin: 5px 0;">Front-End Web Developer</p>
+          </div>
+          <div style="border-top: 1px solid #e5e5e5; padding-top: 15px;">
+            <p><strong>About:</strong> Passionate developer specializing in modern web technologies</p>
+            <p><strong>Skills:</strong> HTML, CSS, JavaScript, React, Node.js</p>
+            <p><strong>Email:</strong> justine.tesara0907@gmail.com</p>
+            <button onclick="downloadResume()" style="background: #4267b2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px; width: 100%;">
+              📄 Download Resume
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div style="padding: 40px; text-align: center;">
+        <h2>Search Results for "${data.query}"</h2>
+        <p style="color: #666;">Try searching for: "resume", "projects", or "facebook"</p>
+        <button onclick="navigateTo('home')" style="margin-top: 20px; padding: 10px 20px; background: #065fd4; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          Back to Projects
+        </button>
+      </div>
+    `;
+  }
+
+  return container;
+}
+
+// Initialize browser when projects window opens
+const originalOpenWindow = openWindow;
+window.openWindow = function (windowId) {
+  originalOpenWindow(windowId);
+  if (windowId === "projects") {
+    setTimeout(() => initializeBrowser(), 100);
+  }
+};
