@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Show welcome
     setTimeout(() => {
-      openWindow("about");
+      openWindow("projects");
       setTimeout(() => showClippy(), 1000);
     }, 500);
   }, 2500);
@@ -254,16 +254,25 @@ function focusWindow(window) {
 }
 
 function openWindow(windowId) {
-  const window = document.querySelector(`.window[data-window="${windowId}"]`);
-  if (!window) return;
+  console.log("🪟 Opening window:", windowId);
 
-  if (window.classList.contains("active")) {
-    focusWindow(window);
+  const windowElement = document.querySelector(
+    `.window[data-window="${windowId}"]`,
+  );
+  if (!windowElement) {
+    console.error("❌ Window not found:", windowId);
     return;
   }
 
-  window.classList.add("active");
-  focusWindow(window);
+  console.log("✅ Window found:", windowId);
+
+  if (windowElement.classList.contains("active")) {
+    focusWindow(windowElement);
+    return;
+  }
+
+  windowElement.classList.add("active");
+  focusWindow(windowElement);
 
   addTaskbarItem(windowId);
 
@@ -326,8 +335,11 @@ function addTaskbarItem(windowId) {
   }
 
   const taskbarItems = document.querySelector(".taskbar-items");
-  const window = document.querySelector(`.window[data-window="${windowId}"]`);
-  const windowTitle = window.querySelector(".title-bar-text").textContent;
+  const windowElement = document.querySelector(
+    `.window[data-window="${windowId}"]`,
+  );
+  const windowTitle =
+    windowElement.querySelector(".title-bar-text").textContent;
 
   const taskbarItem = document.createElement("div");
   taskbarItem.className = "taskbar-item active";
@@ -345,7 +357,7 @@ function addTaskbarItem(windowId) {
   });
 
   // Inside addTaskbarItem
-  const iconSrc = window.querySelector(".title-bar img")?.src;
+  const iconSrc = windowElement.querySelector(".title-bar img")?.src;
   if (iconSrc) {
     const img = document.createElement("img");
     img.src = iconSrc;
@@ -1094,11 +1106,25 @@ const browserState = {
 
 // Initialize browser on load
 function initializeBrowser() {
+  console.log("🔧 initializeBrowser called");
+
+  const browserContent = document.getElementById("browser-content");
+  console.log("📦 browser-content exists:", !!browserContent);
+
+  if (!browserContent) {
+    console.error("❌ Browser content div not found! Retrying...");
+    setTimeout(() => initializeBrowser(), 500);
+    return;
+  }
+
+  console.log("✅ Browser content found, initializing...");
+
   // Register pages
   browserState.pages = {
     home: renderProjectsHome,
     search: renderSearchResults,
     project: renderProjectDetail,
+    contact: renderContactPage, // Add this line
   };
 
   // Load home page
@@ -1413,36 +1439,238 @@ function renderSearchResults(data) {
   const container = document.createElement("div");
 
   if (data.type === "resume") {
-    // Old Facebook style for resume search
+    // Old Facebook Blue Header
     container.innerHTML = `
-      <div style="background: #3b5998; padding: 20px; color: white; font-family: Arial;">
-        <h1 style="font-size: 24px; margin: 0;">facebook</h1>
+      <div style="background: #3b5998; padding: 12px 20px; color: white; font-family: Arial, sans-serif; border-bottom: 1px solid #29447e;">
+        <div style="max-width: 980px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+          <h1 style="font-size: 28px; margin: 0; font-weight: normal; letter-spacing: -1px;">facebook</h1>
+        </div>
       </div>
-      <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
-        <div style="background: white; border: 1px solid #ddd; padding: 20px; border-radius: 3px;">
-          <div style="text-align: center; margin-bottom: 20px;">
-            <div style="width: 100px; height: 100px; background: #4A90E2; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white;">
-              J
+      
+      <!-- Main Content -->
+      <div style="background: #e9ebee; min-height: 500px; padding: 20px 0;">
+        <div style="max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 15px;">
+          
+          <!-- Left Sidebar -->
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <!-- Profile Card -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; overflow: hidden;">
+              <!-- Cover Photo Area -->
+              <div style="height: 120px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              
+              <!-- Profile Photo -->
+              <div style="text-align: center; margin-top: -50px; padding: 0 20px 15px;">
+                <div style="width: 100px; height: 100px; background: white; border: 3px solid white; border-radius: 3px; margin: 0 auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 40px; color: #3b5998; font-weight: bold; overflow: hidden;">
+                  <img src="profile.jpg" alt="Justine Tesara" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.textContent='JT';" />
+                </div>
+                <h2 style="margin: 12px 0 4px; font-size: 20px; color: #1d2129; font-weight: 600;">Justine Tesara</h2>
+                <p style="margin: 0; color: #606770; font-size: 13px;">Aspiring Web Developer</p>
+              </div>
+              
+              <!-- Quick Stats -->
+              <div style="border-top: 1px solid #e5e5e5; padding: 12px 15px; display: flex; justify-content: space-around; font-size: 12px;">
+                <div style="text-align: center;">
+                  <div style="font-weight: bold; color: #3b5998; font-size: 16px;">50+</div>
+                  <div style="color: #606770;">Projects</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-weight: bold; color: #3b5998; font-size: 16px;">2</div>
+                  <div style="color: #606770;">Years Exp</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-weight: bold; color: #3b5998; font-size: 16px;">15+</div>
+                  <div style="color: #606770;">Skills</div>
+                </div>
+              </div>
             </div>
-            <h2 style="margin: 0; color: #333;">Justine Tesara</h2>
-            <p style="color: #666; margin: 5px 0;">Front-End Web Developer</p>
+            
+            <!-- About Section -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; color: #1d2129; font-weight: 600;">About</h3>
+              <p style="margin: 0; font-size: 13px; color: #1d2129; line-height: 1.6;">Passionate Web developer with creativity and love for creating beautiful interfaces</p>
+            </div>
+            
+            <!-- Info Section -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; color: #1d2129; font-weight: 600;">Info</h3>
+              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                <div style="display: flex; gap: 10px;">
+                  <span style="color: #606770;">💼</span>
+                  <div>
+                    <div style="color: #1d2129;">IT Intern at <strong>Sutherland Global Services</strong></div>
+                    <div style="color: #606770; font-size: 12px;">3 months</div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <span style="color: #606770;">🎓</span>
+                  <div style="color: #1d2129;">Studied at <strong>Bicol University Polangui</strong></div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <span style="color: #606770;">🏠</span>
+                  <div style="color: #1d2129;">Lives in <strong>Polangui, Albay, Philippines</strong></div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <span style="color: #606770;">📍</span>
+                  <div style="color: #1d2129;">From <strong>Polangui, Albay, Philippines</strong></div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <span style="color: #606770;">💑</span>
+                  <div style="color: #1d2129;"><strong>In a relationship</strong></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Hobbies -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; color: #1d2129; font-weight: 600;">Hobbies & Interests</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <span style="background: #e4e6eb; padding: 5px 10px; border-radius: 12px; font-size: 12px; color: #1d2129;">💪 GYM</span>
+                <span style="background: #e4e6eb; padding: 5px 10px; border-radius: 12px; font-size: 12px; color: #1d2129;">🏃 Running</span>
+                <span style="background: #e4e6eb; padding: 5px 10px; border-radius: 12px; font-size: 12px; color: #1d2129;">🎵 Music</span>
+                <span style="background: #e4e6eb; padding: 5px 10px; border-radius: 12px; font-size: 12px; color: #1d2129;">💻 Coding</span>
+              </div>
+            </div>
           </div>
-          <div style="border-top: 1px solid #e5e5e5; padding-top: 15px;">
-            <p><strong>About:</strong> Passionate developer specializing in modern web technologies</p>
-            <p><strong>Skills:</strong> HTML, CSS, JavaScript, React, Node.js</p>
-            <p><strong>Email:</strong> justine.tesara0907@gmail.com</p>
-            <button onclick="downloadResume()" style="background: #4267b2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px; width: 100%;">
-              📄 Download Resume
-            </button>
+          
+          <!-- Right Content Area -->
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <!-- Quote / Status -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 20px; text-align: center;">
+              <div style="font-size: 24px; color: #3b5998; margin-bottom: 10px;">"</div>
+              <p style="font-size: 16px; font-style: italic; color: #1d2129; margin: 0; line-height: 1.5;">Talk less, Do more</p>
+              <div style="font-size: 24px; color: #3b5998; margin-top: 10px; transform: rotate(180deg);">"</div>
+            </div>
+            
+            <!-- Education -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 15px; font-size: 16px; color: #1d2129; font-weight: 600; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px;">🎓 Education</h3>
+              <div style="display: flex; gap: 15px;">
+                <div style="width: 50px; height: 50px; background: #3b5998; border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">🎓</div>
+                <div style="flex: 1;">
+                  <h4 style="margin: 0 0 5px; font-size: 15px; color: #1d2129; font-weight: 600;">Bicol University Polangui</h4>
+                  <p style="margin: 0 0 4px; font-size: 13px; color: #606770;">BS Information Technology</p>
+                  <p style="margin: 0; font-size: 12px; color: #90949c;">2021 - 2025</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Work Experience -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 15px; font-size: 16px; color: #1d2129; font-weight: 600; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px;">💼 Work Experience</h3>
+              <div style="display: flex; gap: 15px;">
+                <div style="width: 50px; height: 50px; background: #3b5998; border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">💼</div>
+                <div style="flex: 1;">
+                  <h4 style="margin: 0 0 5px; font-size: 15px; color: #1d2129; font-weight: 600;">IT Intern</h4>
+                  <p style="margin: 0 0 8px; font-size: 13px; color: #606770;">Sutherland Global Services, Pili · 3 months</p>
+                  <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #1d2129; line-height: 1.8;">
+                    <li>Diagnosed and resolved hardware and software issues</li>
+                    <li>Supported monitoring of network ports and device connectivity</li>
+                    <li>Set up computers and peripherals for everyday use</li>
+                    <li>Organized and managed computer accessories and components</li>
+                    <li>Performed cable management to keep workstations neat and efficient</li>
+                    <li>Reimaged systems to restore or prepare devices for deployment</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Skills -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 15px; font-size: 16px; color: #1d2129; font-weight: 600; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px;">🛠️ Technical Skills</h3>
+              
+              <div style="margin-bottom: 20px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: #606770; font-weight: 600;">Front-End Development</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">HTML</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">CSS</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">JavaScript</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Bootstrap</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Tailwind</span>
+                </div>
+              </div>
+              
+              <div style="margin-bottom: 20px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: #606770; font-weight: 600;">Back-End Development</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">PHP</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Node.js</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Express.js</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">MySQL</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Python</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">REST APIs</span>
+                </div>
+              </div>
+              
+              <div style="margin-bottom: 20px;">
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: #606770; font-weight: 600;">Tools & AI</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Git</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">GitHub</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">VS Code</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Postman</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Claude</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">ChatGPT</span>
+                </div>
+              </div>
+              
+              <div>
+                <h4 style="margin: 0 0 10px; font-size: 13px; color: #606770; font-weight: 600;">Soft Skills</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <span style="background: #e4e6eb; color: #1d2129; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Willingness to Learn</span>
+                  <span style="background: #e4e6eb; color: #1d2129; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Adaptability</span>
+                  <span style="background: #e4e6eb; color: #1d2129; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Teamwork</span>
+                  <span style="background: #e4e6eb; color: #1d2129; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Problem Solving</span>
+                  <span style="background: #e4e6eb; color: #1d2129; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Communication</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Social Links -->
+            <div style="background: white; border: 1px solid #dddfe2; border-radius: 3px; padding: 15px;">
+              <h3 style="margin: 0 0 15px; font-size: 16px; color: #1d2129; font-weight: 600; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px;">🔗 Connect With Me</h3>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <a href="https://github.com/JustineTesara" target="_blank" style="background: #24292e; color: white; padding: 10px; border-radius: 4px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  💻 GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/justine-tesara-a59674318/" target="_blank" style="background: #0077b5; color: white; padding: 10px; border-radius: 4px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  💼 LinkedIn
+                </a>
+                <a href="https://www.facebook.com/justine.riosa.tesara" target="_blank" style="background: #1877f2; color: white; padding: 10px; border-radius: 4px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  📘 Facebook
+                </a>
+                <a href="mailto:justine.tesara0907@gmail.com" style="background: #ea4335; color: white; padding: 10px; border-radius: 4px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  📧 Email
+                </a>
+              </div>
+              <button onclick="downloadResume()" style="width: 100%; margin-top: 15px; background: #42b72a; color: white; border: none; padding: 12px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                📄 Download Resume (PDF)
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      
+      <!-- Mobile Responsive Styles -->
+      <style>
+        @media (max-width: 768px) {
+          div[style*="grid-template-columns: 320px 1fr"] {
+            grid-template-columns: 1fr !important;
+          }
+          
+          div[style*="grid-template-columns: repeat(2, 1fr)"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      </style>
     `;
   } else {
+    // Default search results
     container.innerHTML = `
       <div style="padding: 40px; text-align: center;">
         <h2>Search Results for "${data.query}"</h2>
-        <p style="color: #666;">Try searching for: "resume", "projects", or "facebook"</p>
+        <p style="color: #666;">Try searching for: "resume", "projects", or "contact"</p>
         <button onclick="navigateTo('home')" style="margin-top: 20px; padding: 10px 20px; background: #065fd4; color: white; border: none; border-radius: 4px; cursor: pointer;">
           Back to Projects
         </button>
@@ -1453,11 +1681,371 @@ function renderSearchResults(data) {
   return container;
 }
 
+function renderContactPage() {
+  const container = document.createElement("div");
+
+  container.innerHTML = `
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60px 20px; text-align: center;">
+      <h1 style="color: white; font-size: 36px; margin: 0 0 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Get In Touch</h1>
+      <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin: 0;">I'd love to hear from you! Send me a message.</p>
+    </div>
+    
+    <div style="max-width: 1000px; margin: -40px auto 40px; padding: 0 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        
+        <!-- Contact Form -->
+        <div style="background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+          <h2 style="margin: 0 0 20px; color: #333; font-size: 24px;">Send a Message</h2>
+          
+          <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+              <label style="display: block; margin-bottom: 5px; color: #555; font-size: 13px; font-weight: 600;">Your Name</label>
+              <input 
+                type="text" 
+                name="name" 
+                required 
+                placeholder="John Doe"
+                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: 'Tahoma', sans-serif;"
+              />
+            </div>
+            
+            <div>
+              <label style="display: block; margin-bottom: 5px; color: #555; font-size: 13px; font-weight: 600;">Email Address</label>
+              <input 
+                type="email" 
+                name="email" 
+                required 
+                placeholder="john@example.com"
+                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: 'Tahoma', sans-serif;"
+              />
+            </div>
+            
+            <div>
+              <label style="display: block; margin-bottom: 5px; color: #555; font-size: 13px; font-weight: 600;">Message</label>
+              <textarea 
+                name="message" 
+                required 
+                rows="5" 
+                placeholder="Your message here..."
+                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: 'Tahoma', sans-serif; resize: vertical;"
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit" 
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 4px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;"
+              onmouseover="this.style.transform='translateY(-2px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              📧 Send Message
+            </button>
+          </form>
+        </div>
+        
+        <!-- Contact Info & Social Links -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Contact Cards -->
+          <div style="background: white; border-radius: 8px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <h3 style="margin: 0 0 20px; color: #333; font-size: 20px;">Contact Information</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <div style="display: flex; gap: 15px; align-items: start;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <span style="font-size: 20px;">📧</span>
+                </div>
+                <div>
+                  <h4 style="margin: 0 0 5px; font-size: 14px; color: #333;">Email</h4>
+                  <a href="mailto:justine.tesara0907@gmail.com" style="color: #667eea; text-decoration: none; font-size: 13px;">justine.tesara0907@gmail.com</a>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 15px; align-items: start;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <span style="font-size: 20px;">📍</span>
+                </div>
+                <div>
+                  <h4 style="margin: 0 0 5px; font-size: 14px; color: #333;">Location</h4>
+                  <p style="margin: 0; color: #666; font-size: 13px;">Polangui, Albay, Philippines</p>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 15px; align-items: start;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <span style="font-size: 20px;">⏰</span>
+                </div>
+                <div>
+                  <h4 style="margin: 0 0 5px; font-size: 14px; color: #333;">Availability</h4>
+                  <p style="margin: 0; color: #666; font-size: 13px;">Open to opportunities</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Links Card -->
+          <div style="background: white; border-radius: 8px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <h3 style="margin: 0 0 15px; color: #333; font-size: 20px;">Connect on Social Media</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <a href="https://github.com/JustineTesara" target="_blank" style="background: #24292e; color: white; padding: 12px 15px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                <span style="font-size: 18px;">💻</span>
+                <span>GitHub - @JustineTesara</span>
+              </a>
+              
+              <a href="https://www.linkedin.com/in/justine-tesara-a59674318/" target="_blank" style="background: #0077b5; color: white; padding: 12px 15px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                <span style="font-size: 18px;">💼</span>
+                <span>LinkedIn - Justine Tesara</span>
+              </a>
+              
+              <a href="https://www.facebook.com/justine.riosa.tesara" target="_blank" style="background: #1877f2; color: white; padding: 12px 15px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                <span style="font-size: 18px;">📘</span>
+                <span>Facebook - Justine Tesara</span>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Quick Actions -->
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;">
+            <h3 style="margin: 0 0 15px; color: white; font-size: 18px;">Quick Actions</h3>
+            <button onclick="downloadResume()" style="width: 100%; background: white; color: #667eea; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              📄 Download Resume
+            </button>
+            <button onclick="navigateTo('search', { query: 'resume', type: 'resume' })" style="width: 100%; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              👤 View Full Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Responsive -->
+    <style>
+      @media (max-width: 768px) {
+        div[style*="grid-template-columns: 1fr 1fr"] {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
+  `;
+
+  // Handle form submission with EmailJS
+  setTimeout(() => {
+    const form = document.getElementById("contact-form");
+    if (form) {
+      // Remove any existing listener first to prevent duplicates
+      const newForm = form.cloneNode(true);
+      form.parentNode.replaceChild(newForm, form);
+
+      newForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(newForm);
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+
+        // Basic validation
+        if (!name || name.trim().length < 2) {
+          showContactAlert(
+            "❌ Please enter your name (at least 2 characters)",
+            "error",
+          );
+          return;
+        }
+
+        if (!email || !isValidEmail(email)) {
+          showContactAlert("❌ Please enter a valid email address", "error");
+          return;
+        }
+
+        if (!message || message.trim().length < 10) {
+          showContactAlert(
+            "❌ Please enter a message (at least 10 characters)",
+            "error",
+          );
+          return;
+        }
+
+        // Get submit button and disable it
+        const submitBtn = newForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "⏳ Sending...";
+        submitBtn.style.opacity = "0.6";
+        submitBtn.style.cursor = "not-allowed";
+
+        // Prepare template parameters
+        const templateParams = {
+          from_name: name,
+          from_email: email,
+          message: message,
+          sent_date: new Date().toLocaleString(),
+        };
+
+        // Send email via EmailJS
+        emailjs
+          .send(
+            "service_ptchhrk", // Replace with your Service ID
+            "template_vkh8c4b", // Replace with your Template ID
+            templateParams,
+          )
+          .then((response) => {
+            console.log("SUCCESS!", response.status, response.text);
+
+            // Show success message
+            showContactAlert(
+              `✅ Thank you ${name}! Your message has been sent successfully.\n\nI'll get back to you at ${email} soon!`,
+              "success",
+            );
+
+            // Reset form
+            newForm.reset();
+
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.style.opacity = "1";
+            submitBtn.style.cursor = "pointer";
+          })
+          .catch((error) => {
+            console.error("FAILED...", error);
+
+            // Show error message
+            showContactAlert(
+              "❌ Oops! Something went wrong. Please try again or email me directly at justine.tesara0907@gmail.com",
+              "error",
+            );
+
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.style.opacity = "1";
+            submitBtn.style.cursor = "pointer";
+          });
+      });
+    }
+  }, 100);
+
+  // Email validation helper function
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  // Custom alert function for contact form
+  function showContactAlert(message, type) {
+    // Create custom alert
+    const alertDiv = document.createElement("div");
+    alertDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === "success" ? "#42b72a" : "#ea4335"};
+    color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 999999;
+    max-width: 400px;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: slideIn 0.3s ease;
+  `;
+    alertDiv.textContent = message;
+
+    document.body.appendChild(alertDiv);
+
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      alertDiv.style.animation = "slideOut 0.3s ease";
+      setTimeout(() => alertDiv.remove(), 300);
+    }, 5000);
+  }
+
+  // Add animation styles
+  const style = document.createElement("style");
+  style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(400px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(400px); opacity: 0; }
+  }
+`;
+  document.head.appendChild(style);
+
+  return container;
+}
+
 // Initialize browser when projects window opens
 const originalOpenWindow = openWindow;
 window.openWindow = function (windowId) {
   originalOpenWindow(windowId);
   if (windowId === "projects") {
-    setTimeout(() => initializeBrowser(), 100);
+    setTimeout(() => initializeBrowser(), 500);
   }
 };
+// Internet Explorer Loading Effect
+function showIELoading() {
+  const statusText = document.getElementById("ie-status-text");
+  if (!statusText) return;
+
+  const loadingStates = [
+    "⏳ Opening page...",
+    "⏳ Connecting...",
+    "⏳ Downloading...",
+    "⏳ Processing...",
+    "✅ Done",
+  ];
+
+  let index = 0;
+  statusText.textContent = loadingStates[0];
+
+  const interval = setInterval(() => {
+    index++;
+    if (index < loadingStates.length) {
+      statusText.textContent = loadingStates[index];
+    } else {
+      clearInterval(interval);
+    }
+  }, 300);
+}
+
+// Call this when navigating pages
+const originalNavigateTo = navigateTo;
+window.navigateTo = function (page, data) {
+  showIELoading();
+  originalNavigateTo(page, data);
+};
+function show404Error() {
+  const container = document.createElement("div");
+  container.innerHTML = `
+    <div style="padding: 40px; font-family: Arial;">
+      <h1 style="font-size: 18px; margin-bottom: 20px;">
+        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><circle cx='16' cy='16' r='15' fill='%23ff0000'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='20' font-weight='bold'>!</text></svg>" style="vertical-align: middle; margin-right: 10px;" />
+        The page cannot be displayed
+      </h1>
+      <p style="margin: 0 0 15px;">The page you are looking for is currently unavailable. The Web site might be experiencing technical difficulties, or you may need to adjust your browser settings.</p>
+      
+      <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;">
+      
+      <p style="font-weight: bold; margin: 15px 0;">Please try the following:</p>
+      <ul style="line-height: 1.8;">
+        <li>Click the <button onclick="window.history.back()" style="padding: 2px 8px;">Back</button> button to try another link.</li>
+        <li>Click <button onclick="navigateTo('home')" style="padding: 2px 8px;">Home</button> to return to the main page.</li>
+      </ul>
+      
+      <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;">
+      
+      <p style="font-size: 11px; color: #666;">
+        HTTP 404 - File not found<br>
+        Internet Explorer
+      </p>
+    </div>
+  `;
+  return container;
+}

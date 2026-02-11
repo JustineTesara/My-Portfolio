@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Justine - Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <!-- Windows XP Desktop -->
@@ -51,19 +51,13 @@
 
         <div class="desktop-icon" data-window="projects">
           <div class="icon-image">
-            <svg
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect x="4" y="6" width="24" height="20" fill="#4AE290" />
-              <rect x="8" y="10" width="6" height="6" fill="white" />
-              <rect x="18" y="10" width="6" height="6" fill="white" />
-              <rect x="8" y="18" width="6" height="6" fill="white" />
-              <rect x="18" y="18" width="6" height="6" fill="white" />
-            </svg>
+            <img
+              src="ie-icon.png"
+              alt="Internet Explorer"
+              style="width: 100%; height: 100%; object-fit: contain"
+            />
           </div>
-          <span class="icon-label">Projects</span>
+          <span class="icon-label">Internet Explorer</span>
         </div>
 
         <div class="desktop-icon" data-window="contact">
@@ -277,7 +271,18 @@
       <!-- Window: Projects -->
       <div class="window" id="projects-window" data-window="projects">
         <div class="title-bar">
-          <div class="title-bar-text">My Projects</div>
+          <img
+            src="ie-icon.png"
+            alt="IE"
+            style="
+              width: 16px;
+              height: 16px;
+              margin-right: 5px;
+              vertical-align: middle;
+            "
+          />
+
+          <div class="title-bar-text">Internet Explorer</div>
           <div class="title-bar-controls">
             <button class="minimize-btn" aria-label="Minimize"></button>
             <button class="maximize-btn" aria-label="Maximize"></button>
@@ -286,15 +291,53 @@
         </div>
         <div class="window-body browser-window">
           <!-- Browser Toolbar -->
-          <!-- Browser Toolbar -->
           <div class="browser-toolbar">
-            <div class="browser-nav-buttons">
-              <button class="nav-btn" id="browser-back" disabled>←</button>
-              <button class="nav-btn" id="browser-forward" disabled>→</button>
-              <button class="nav-btn" id="browser-refresh">⟳</button>
+            <!-- IE Logo -->
+            <div class="ie-logo">
+              <img
+                src="ie-icon.png"
+                alt="IE"
+                style="width: 20px; height: 20px"
+              />
             </div>
+
+            <!-- File Menu Section -->
+            <div class="ie-toolbar-section">
+              <span class="ie-toolbar-label">File</span>
+              <span class="ie-toolbar-label">Edit</span>
+              <span class="ie-toolbar-label">View</span>
+              <span class="ie-toolbar-label">Favorites</span>
+              <span class="ie-toolbar-label">Tools</span>
+              <span class="ie-toolbar-label">Help</span>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="browser-nav-buttons">
+              <button class="nav-btn" id="browser-back" disabled title="Back">
+                <span style="font-size: 16px">◄</span>
+              </button>
+              <button
+                class="nav-btn"
+                id="browser-forward"
+                disabled
+                title="Forward"
+              >
+                <span style="font-size: 16px">►</span>
+              </button>
+              <button class="nav-btn" id="browser-refresh" title="Refresh">
+                <span style="font-size: 16px">⟳</span>
+              </button>
+              <button class="nav-btn" onclick="navigateTo('home')" title="Home">
+                <span style="font-size: 16px">🏠</span>
+              </button>
+            </div>
+
+            <!-- Address Bar -->
             <div class="browser-url-bar" id="browser-url-bar">
               <span class="url-lock">🔒</span>
+              <span class="ie-toolbar-label" style="margin: 0 5px"
+                >Address</span
+              >
               <input
                 type="text"
                 class="url-input"
@@ -304,9 +347,11 @@
               />
               <button class="url-go-btn" id="url-go-btn">Go</button>
             </div>
-            <div class="browser-menu">
-              <button class="menu-btn">⋮</button>
-            </div>
+
+            <!-- Links Button (Classic IE) -->
+            <button class="nav-btn" title="Links">
+              <span style="font-size: 12px">Links »</span>
+            </button>
           </div>
 
           <!-- Browser Tabs -->
@@ -316,16 +361,56 @@
               <span class="tab-title">My Projects</span>
             </div>
           </div>
-
+          <!-- Browser Bookmarks Bar -->
+          <div class="browser-bookmarks">
+            <button class="bookmark-btn" onclick="navigateTo('home')">
+              <span class="bookmark-icon">🏠</span>
+              <span class="bookmark-text">Home</span>
+            </button>
+            <button
+              class="bookmark-btn"
+              onclick="
+                navigateTo('search', { query: 'resume', type: 'resume' })
+              "
+            >
+              <span class="bookmark-icon">👤</span>
+              <span class="bookmark-text">Resume</span>
+            </button>
+            <button class="bookmark-btn" onclick="navigateTo('contact')">
+              <span class="bookmark-icon">📧</span>
+              <span class="bookmark-text">Contact</span>
+            </button>
+            <button
+              class="bookmark-btn"
+              onclick="
+                window.open('https://github.com/JustineTesara', '_blank')
+              "
+            >
+              <span class="bookmark-icon">💻</span>
+              <span class="bookmark-text">GitHub</span>
+            </button>
+            <button class="bookmark-btn" onclick="downloadResume()">
+              <span class="bookmark-icon">📄</span>
+              <span class="bookmark-text">Download CV</span>
+            </button>
+          </div>
           <!-- Browser Content Area -->
-          <div class="browser-content" id="browser-content">
-            <div class="content-header">
-              <h2 class="youtube-style-title">My Projects Channel</h2>
-              <p class="channel-info">Showcasing my development work</p>
+          <div class="ie-status-bar">
+            <div class="status-section">
+              <span class="status-icon">🌐</span>
+              <span class="status-text" id="ie-status-text">Done</span>
             </div>
-
-            <!-- YouTube-Style Project Grid -->
-            <div class="youtube-grid"></div>
+            <div class="status-section">
+              <span class="status-icon">🔒</span>
+              <span class="status-text">Internet</span>
+            </div>
+            <div class="status-section status-zone">
+              <span class="status-text">My Computer</span>
+            </div>
+          </div>
+          <!-- Browser Content Area (Dynamic) -->
+          <div class="browser-content" id="browser-content">
+            <!-- Content will load here dynamically -->
           </div>
           <!-- Loading Indicator -->
           <div
@@ -512,7 +597,7 @@
                 </div>
                 <div class="contact-details">
                   <h3>Email</h3>
-                  <p>justine.tesara0907@gmail.com</p>
+                  <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0baa5a3a4b9beb5fea4b5a3b1a2b1e0e9e0e790b7bdb1b9bcfeb3bfbd">[email&#160;protected]</a></p>
                 </div>
               </div>
 
@@ -794,8 +879,8 @@
           <span>Skills</span>
         </button>
         <button class="start-menu-item" data-window="projects">
-          <span class="menu-icon">💼</span>
-          <span>Projects</span>
+          <span class="menu-icon">🌐</span>
+          <span>Internet Explorer</span>
         </button>
         <button class="start-menu-item" data-window="contact">
           <span class="menu-icon">📧</span>
@@ -822,7 +907,23 @@
         </button>
       </div>
     </div>
-  </body>
+</body>
 
   <script src="script.js"></script>
+  <!-- EmailJS SDK -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  ></script>
+  <script type="text/javascript">
+    // Initialize EmailJS with your public key
+    (function () {
+      emailjs.init({
+        publicKey: "lnDvXTz1wB_TOrbQw", // ⚠️ REPLACE THIS with your actual EmailJS public key from https://dashboard.emailjs.com/
+      });
+    })();
+    
+    console.log("✅ All scripts loaded successfully!");
+  </script>
+</body>
 </html>
