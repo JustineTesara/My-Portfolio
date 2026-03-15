@@ -1,3 +1,20 @@
+// Mobile Detection - Add this RIGHT AFTER <script> tag opens
+function detectMobile() {
+  const isMobile =
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+    window.innerWidth <= 768;
+
+  if (isMobile) {
+    // Show mobile warning message
+    const mobileWarning = document.createElement("div");
+    mobileWarning.classList.add("mobile-warning-banner");
+    document.body.appendChild(mobileWarning);
+  }
+}
+
+// Call on page load
+window.addEventListener("load", detectMobile);
+
 /* ===================================
    Windows XP Portfolio - Complete JavaScript
    All Features Included & Working
@@ -40,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Show welcome
     setTimeout(() => {
-      openWindow("projects");
+      openWindow("about");
       setTimeout(() => showClippy(), 1000);
     }, 500);
   }, 2500);
@@ -116,6 +133,19 @@ function setupWindowControls(window) {
   });
 }
 
+// Start Menu Toggle
+function toggleStartMenu() {
+  const startMenu = document.getElementById("start-menu");
+  startMenu.classList.toggle("active");
+}
+// And close it when clicking outside:
+document.addEventListener("click", (e) => {
+  const startMenu = document.getElementById("start-menu");
+  const startBtn = document.querySelector(".start-button");
+  if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) {
+    startMenu.classList.remove("active");
+  }
+});
 function closeWindow(window) {
   window.classList.remove("active");
   removeTaskbarItem(window.getAttribute("data-window"));
@@ -287,6 +317,28 @@ function openWindow(windowId) {
     }, 100);
   }
 }
+
+// Add window focus management
+function bringWindowToFront(windowElement) {
+  // Get all windows
+  const allWindows = document.querySelectorAll(".window");
+
+  // Reset all windows to base z-index
+  allWindows.forEach((win) => {
+    win.style.zIndex = "10";
+  });
+
+  // Bring clicked window to front
+  windowElement.style.zIndex = "100";
+}
+
+// Add click listener to all windows
+document.addEventListener("click", function (e) {
+  const clickedWindow = e.target.closest(".window");
+  if (clickedWindow) {
+    bringWindowToFront(clickedWindow);
+  }
+});
 
 /* ===================================
    Desktop Icons
@@ -865,20 +917,27 @@ function checkExplorerAchievement() {
   }
 }
 
-/* ===================================
-   Resume Download Function
-   ================================== */
+// Resume Download Function
 function downloadResume() {
+  // Create a temporary link element
   const link = document.createElement("a");
-  link.href = "Justine_Tesara_RESUME.pdf";
-  link.download = "Justine_Tesara_RESUME.pdf";
+
+  // Option A: If you have a PDF resume file
+  link.href = "Justine_Tesara_Resume.pdf"; // ⚠️ Upload your PDF to the same folder first
+  link.download = "Justine_Tesara_Resume.pdf";
+
+  // Option B: If you don't have a PDF yet (temporary solution)
+  // link.href = 'https://drive.google.com/your-resume-link'; // Replace with your Google Drive link
+  // link.target = '_blank';
+
+  // Trigger download
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 
-  // Option 2: External link (Google Drive example)
-  // Replace with your actual resume URL
-  // window.open("https://drive.google.com/file/d/YOUR_FILE_ID/view", "_blank");
+  // Show confirmation (Windows XP style)
+  alert("📄 Resume download started!\n\nThank you for your interest!");
 }
-
 /* ===================================
    Additional Event Listeners
    ================================== */
@@ -1598,8 +1657,10 @@ function renderSearchResults(data) {
                   <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Node.js</span>
                   <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Express.js</span>
                   <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">MySQL</span>
+                  <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">PostgreSQL</span>
                   <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">Python</span>
                   <span style="background: #3b5998; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;">REST APIs</span>
+                  
                 </div>
               </div>
               
@@ -1966,17 +2027,7 @@ function renderContactPage() {
 
   // Add animation styles
   const style = document.createElement("style");
-  style.textContent = `
-  @keyframes slideIn {
-    from { transform: translateX(400px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  @keyframes slideOut {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(400px); opacity: 0; }
-  }
-`;
-  document.head.appendChild(style);
+
 
   return container;
 }

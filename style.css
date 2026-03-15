@@ -11,7 +11,7 @@
 
 body {
   font-family: "Tahoma", "Microsoft Sans Serif", Arial, sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   overflow: hidden;
   height: 100vh;
   background: #5a7edb;
@@ -97,6 +97,9 @@ body {
   display: none;
   flex-direction: column;
   z-index: 10;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease; /* ✅ Added here */
 }
 
 .window.active {
@@ -250,7 +253,7 @@ body {
 .content-section p {
   line-height: 1.6;
   margin-bottom: 10px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 /* ===================================
@@ -310,7 +313,7 @@ body {
   border: 2px solid;
   border-color: #fff #888c8f #888c8f #fff;
   padding: 6px 12px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   display: inline-block;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -745,24 +748,21 @@ body {
    Responsive Design
    ================================== */
 @media (max-width: 768px) {
+  div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
   .desktop-icons {
-    grid-template-columns: repeat(4, 70px);
-    grid-gap: 15px;
-  }
-
-  .desktop-icon {
-    width: 70px;
-  }
-
-  .icon-image {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
 
   .window {
+    width: 100% !important;
+    height: calc(100vh - 60px) !important;
+    top: 30px !important;
+    left: 0 !important;
+    max-width: 100% !important;
     min-width: 300px;
-    width: 95% !important;
-    max-width: 95%;
   }
 
   .profile-section {
@@ -779,6 +779,10 @@ body {
 
   .content-section {
     padding: 15px;
+  }
+
+  .title-bar {
+    cursor: default;
   }
 }
 
@@ -1881,16 +1885,6 @@ body.dragging {
 }
 
 .features-list li {
-  padding: 10px 0;
-  padding-left: 30px;
-  position: relative;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #030303;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.features-list li {
   padding: 12px 0;
   padding-left: 35px;
   position: relative;
@@ -2062,21 +2056,7 @@ body.dragging {
     justify-content: center;
   }
 }
-.window {
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
 
-.window:not(.active) {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-.window.active {
-  opacity: 1;
-  transform: scale(1);
-}
 /* ===================================
    ENHANCED BROWSER STYLES
    ================================== */
@@ -2224,10 +2204,80 @@ body.dragging {
   border: 1px solid #808080;
   padding: 2px 10px;
 }
-
+/* Mobile Warning Banner */
+.mobile-warning-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  z-index: 999999;
+  font-family: Tahoma, sans-serif;
+  font-size: 13px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
 /* Mobile: Hide status bar */
 @media (max-width: 768px) {
   .ie-status-bar {
     display: none;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+/* Mobile Bottom Navigation */
+.mobile-nav {
+  display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #1f53c5 0%, #1941a5 100%);
+    z-index: 9999;
+    padding: 8px 0;
+    justify-content: space-around;
+  }
+
+  .mobile-nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+  }
+
+  .mobile-nav-btn span:first-child {
+    font-size: 20px;
   }
 }

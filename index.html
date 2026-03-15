@@ -3,15 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- After your existing meta tags -->
+    <meta
+      name="description"
+      content="Justine Tesara — Front-End Web Developer portfolio. Creative Windows XP-themed portfolio showcasing projects, skills, and contact info."
+    />
+    <meta name="author" content="Justine Tesara" />
+    <meta
+      name="keywords"
+      content="Front-End Developer, Web Developer, Portfolio, HTML, CSS, JavaScript"
+    />
+
+    <!-- Open Graph (for LinkedIn, Facebook preview) -->
+    <meta
+      property="og:title"
+      content="Justine Tesara — Front-End Developer Portfolio"
+    />
+    <meta
+      property="og:description"
+      content="Creative Windows XP-themed portfolio by Justine Tesara."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-portfolio-url.com" />
+
+    <!-- Favicon (add one!) -->
+    <link rel="icon" type="image/png" href="image/favicon.png" />
     <title>Justine - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- Windows XP Desktop -->
     <div class="desktop">
       <!-- Desktop Icons -->
       <div class="desktop-icons">
-        <div class="desktop-icon" data-window="about">
+        <div
+          class="desktop-icon"
+          data-window="about"
+          role="button"
+          tabindex="0"
+          aria-label="Open About Me window"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -31,7 +62,13 @@
           <span class="icon-label">About Me</span>
         </div>
 
-        <div class="desktop-icon" data-window="skills">
+        <div
+          class="desktop-icon"
+          data-window="skills"
+          role="button"
+          tabindex="0"
+          aria-label="Open Skills window"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -49,7 +86,13 @@
           <span class="icon-label">Skills</span>
         </div>
 
-        <div class="desktop-icon" data-window="projects">
+        <div
+          class="desktop-icon"
+          data-window="projects"
+          role="button"
+          tabindex="0"
+          aria-label="Open Internet Explorer / Projects"
+        >
           <div class="icon-image">
             <img
               src="ie-icon.png"
@@ -60,7 +103,13 @@
           <span class="icon-label">Internet Explorer</span>
         </div>
 
-        <div class="desktop-icon" data-window="contact">
+        <div
+          class="desktop-icon"
+          data-window="contact"
+          role="button"
+          tabindex="0"
+          aria-label="Open Contact window"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -74,7 +123,13 @@
           <span class="icon-label">Contact</span>
         </div>
 
-        <div class="desktop-icon" id="resume-icon">
+        <div
+          class="desktop-icon"
+          id="resume-icon"
+          role="button"
+          tabindex="0"
+          aria-label="Download Resume PDF"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -106,7 +161,13 @@
           <span class="icon-label">My Resume.pdf</span>
         </div>
 
-        <div class="desktop-icon" data-window="terminal">
+        <div
+          class="desktop-icon"
+          data-window="terminal"
+          role="button"
+          tabindex="0"
+          aria-label="Open Command Prompt"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -126,7 +187,13 @@
           <span class="icon-label">Command Prompt</span>
         </div>
 
-        <div class="desktop-icon" data-window="minesweeper">
+        <div
+          class="desktop-icon"
+          data-window="minesweeper"
+          role="button"
+          tabindex="0"
+          aria-label="Open Minesweeper game"
+        >
           <div class="icon-image">
             <svg
               viewBox="0 0 32 32"
@@ -227,6 +294,7 @@
                 <span class="skill-badge">Node.js</span>
                 <span class="skill-badge">Express.js</span>
                 <span class="skill-badge">MySQL</span>
+                <span class="skill-badge">PostgreSQL</span>
                 <span class="skill-badge">Python</span>
                 <span class="skill-badge">REST APIs</span>
               </div>
@@ -597,7 +665,11 @@
                 </div>
                 <div class="contact-details">
                   <h3>Email</h3>
-                  <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0baa5a3a4b9beb5fea4b5a3b1a2b1e0e9e0e790b7bdb1b9bcfeb3bfbd">[email&#160;protected]</a></p>
+                  <p>
+                    <a href="mailto: justine.tesara0907@gmail.com"
+                      >justine.tesara0907@gmail.com</a
+                    >
+                  </p>
                 </div>
               </div>
 
@@ -624,7 +696,7 @@
                 </div>
                 <div class="contact-details">
                   <h3>Location</h3>
-                  <p>Rancho Imperial Kinale, Polangui, Albay Philippines</p>
+                  <p>Polangui, Albay Philippines</p>
                 </div>
               </div>
 
@@ -907,23 +979,36 @@
         </button>
       </div>
     </div>
-</body>
+    <!-- Mobile Navigation Bar -->
+    <div class="mobile-nav">
+      <button class="mobile-nav-btn" onclick="openWindow('about')">
+        <span>👤</span><span>About</span>
+      </button>
+      <button class="mobile-nav-btn" onclick="openWindow('skills')">
+        <span>📊</span><span>Skills</span>
+      </button>
+      <button class="mobile-nav-btn" onclick="openWindow('projects')">
+        <span>🌐</span><span>Projects</span>
+      </button>
+      <button class="mobile-nav-btn" onclick="openWindow('contact')">
+        <span>📧</span><span>Contact</span>
+      </button>
+    </div>
+    <script src="script.js"></script>
+    <!-- EmailJS SDK -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      // Initialize EmailJS with your public key
+      (function () {
+        emailjs.init({
+          publicKey: "lnDvXTz1wB_TOrbQw", // ⚠️ REPLACE THIS with your actual EmailJS public key from https://dashboard.emailjs.com/
+        });
+      })();
 
-  <script src="script.js"></script>
-  <!-- EmailJS SDK -->
-  <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
-  ></script>
-  <script type="text/javascript">
-    // Initialize EmailJS with your public key
-    (function () {
-      emailjs.init({
-        publicKey: "lnDvXTz1wB_TOrbQw", // ⚠️ REPLACE THIS with your actual EmailJS public key from https://dashboard.emailjs.com/
-      });
-    })();
-    
-    console.log("✅ All scripts loaded successfully!");
-  </script>
-</body>
+      console.log("✅ All scripts loaded successfully!");
+    </script>
+  </body>
 </html>

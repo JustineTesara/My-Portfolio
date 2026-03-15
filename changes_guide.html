@@ -1,0 +1,4086 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Improvement Guide — Justine</title>
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg2: #161b22;
+        --bg3: #21262d;
+        --bg4: #2d333b;
+        --border: #30363d;
+        --text: #e6edf3;
+        --text2: #8b949e;
+        --text3: #6e7681;
+        --red: #ff7b72;
+        --red-bg: #3d1a1a;
+        --red-border: #8b2020;
+        --yellow: #e3b341;
+        --yellow-bg: #2d2008;
+        --yellow-border: #6e4c00;
+        --green: #3fb950;
+        --green-bg: #122117;
+        --green-border: #1a5c2a;
+        --blue: #58a6ff;
+        --blue-bg: #0d2040;
+        --blue-border: #1a4070;
+        --purple: #bc8cff;
+        --purple-bg: #1e1040;
+        --orange: #ffa657;
+        --orange-bg: #2d1a00;
+        --orange-border: #6e3a00;
+        --code-bg: #0d1117;
+        --code-border: #30363d;
+        --code-add: rgba(46, 160, 67, 0.15);
+        --code-remove: rgba(248, 81, 73, 0.15);
+        --radius: 8px;
+        --radius-lg: 12px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      /* ── Sidebar ─────────────────────── */
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 260px;
+        background: var(--bg2);
+        border-right: 1px solid var(--border);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 0 0 24px;
+        z-index: 100;
+      }
+
+      .sidebar-header {
+        padding: 20px 16px 16px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        background: var(--bg2);
+        z-index: 1;
+      }
+
+      .sidebar-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .sidebar-sub {
+        font-size: 11px;
+        color: var(--text3);
+        margin-top: 3px;
+      }
+
+      .sidebar-nav {
+        padding: 8px 0;
+      }
+
+      .sidebar-section-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 12px 16px 4px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        font-size: 12px;
+        color: var(--text2);
+        text-decoration: none;
+        border-left: 2px solid transparent;
+        transition: all 0.15s;
+        cursor: pointer;
+      }
+
+      .nav-item:hover {
+        background: var(--bg3);
+        color: var(--text);
+        border-left-color: var(--blue);
+      }
+
+      .nav-item.critical {
+        border-left-color: transparent;
+      }
+      .nav-item.critical:hover {
+        border-left-color: var(--red);
+      }
+
+      .priority-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-red {
+        background: var(--red);
+      }
+      .dot-yellow {
+        background: var(--yellow);
+      }
+      .dot-orange {
+        background: var(--orange);
+      }
+      .dot-green {
+        background: var(--green);
+      }
+
+      /* ── Main Content ─────────────────── */
+      .main {
+        margin-left: 260px;
+        padding: 32px 40px;
+        max-width: 1000px;
+      }
+
+      /* ── Hero ─────────────────────────── */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #0d1117 0%,
+          #1a1f2e 50%,
+          #0d1117 100%
+        );
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 36px 40px;
+        margin-bottom: 32px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(88, 166, 255, 0.08) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        background: var(--blue-bg);
+        color: var(--blue);
+        border: 1px solid var(--blue-border);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+
+      .hero h1 span {
+        color: var(--blue);
+      }
+
+      .hero p {
+        color: var(--text2);
+        font-size: 14px;
+        max-width: 560px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      .stat-row {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .stat-badge {
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .badge-red {
+        background: var(--red-bg);
+        color: var(--red);
+        border: 1px solid var(--red-border);
+      }
+      .badge-yellow {
+        background: var(--yellow-bg);
+        color: var(--yellow);
+        border: 1px solid var(--yellow-border);
+      }
+      .badge-orange {
+        background: var(--orange-bg);
+        color: var(--orange);
+        border: 1px solid var(--orange-border);
+      }
+      .badge-green {
+        background: var(--green-bg);
+        color: var(--green);
+        border: 1px solid var(--green-border);
+      }
+      .badge-blue {
+        background: var(--blue-bg);
+        color: var(--blue);
+        border: 1px solid var(--blue-border);
+      }
+      .badge-purple {
+        background: var(--purple-bg);
+        color: var(--purple);
+        border: 1px solid #5a3a90;
+      }
+
+      /* ── Change Card ──────────────────── */
+      .change-card {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin-bottom: 28px;
+        overflow: hidden;
+      }
+
+      .change-card-header {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .change-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .num-red {
+        background: var(--red-bg);
+        color: var(--red);
+        border: 1px solid var(--red-border);
+      }
+      .num-yellow {
+        background: var(--yellow-bg);
+        color: var(--yellow);
+        border: 1px solid var(--yellow-border);
+      }
+      .num-orange {
+        background: var(--orange-bg);
+        color: var(--orange);
+        border: 1px solid var(--orange-border);
+      }
+      .num-green {
+        background: var(--green-bg);
+        color: var(--green);
+        border: 1px solid var(--green-border);
+      }
+
+      .change-title-group {
+        flex: 1;
+      }
+
+      .change-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+
+      .change-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .file-tag {
+        font-size: 11px;
+        font-family: "Consolas", "Courier New", monospace;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        color: var(--text2);
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+
+      .change-body {
+        padding: 20px 22px;
+      }
+
+      /* ── Why section ─────────────────── */
+      .why-box {
+        background: var(--bg3);
+        border-left: 3px solid var(--blue);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.7;
+      }
+
+      .why-box strong {
+        color: var(--text);
+      }
+
+      /* ── Steps ───────────────────────── */
+      .steps {
+        margin-bottom: 20px;
+      }
+
+      .step {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 10px;
+        align-items: flex-start;
+      }
+
+      .step-num {
+        width: 22px;
+        height: 22px;
+        background: var(--bg4);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--blue);
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .step-text {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.6;
+      }
+
+      .step-text strong {
+        color: var(--text);
+      }
+      .step-text code {
+        font-family: "Consolas", "Courier New", monospace;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-size: 11px;
+        color: var(--orange);
+      }
+
+      /* ── Code Diff ───────────────────── */
+      .code-diff {
+        margin-bottom: 20px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--code-border);
+      }
+
+      .diff-tabs {
+        display: flex;
+        background: var(--bg3);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .diff-tab {
+        padding: 8px 16px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border-bottom: 2px solid transparent;
+        transition: all 0.15s;
+        user-select: none;
+      }
+
+      .diff-tab.before {
+        color: var(--red);
+      }
+      .diff-tab.after {
+        color: var(--green);
+      }
+      .diff-tab.active {
+        border-bottom-color: currentColor;
+        background: var(--bg2);
+      }
+
+      .diff-panel {
+        display: none;
+      }
+      .diff-panel.active {
+        display: block;
+      }
+
+      .code-block {
+        background: var(--code-bg);
+        padding: 16px;
+        overflow-x: auto;
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--text2);
+      }
+
+      .code-line {
+        display: flex;
+        gap: 16px;
+        padding: 1px 4px;
+        border-radius: 3px;
+        white-space: pre;
+      }
+
+      .line-num {
+        color: var(--text3);
+        min-width: 28px;
+        text-align: right;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .line-content {
+        flex: 1;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+
+      .line-add {
+        background: var(--code-add);
+      }
+      .line-remove {
+        background: var(--code-remove);
+      }
+
+      .line-add .line-content::before {
+        content: "+ ";
+        color: var(--green);
+      }
+      .line-remove .line-content::before {
+        content: "- ";
+        color: var(--red);
+      }
+      .line-add .line-content {
+        color: #aff5b4;
+      }
+      .line-remove .line-content {
+        color: #ffa198;
+      }
+
+      /* Syntax colors */
+      .kw {
+        color: #ff7b72;
+      } /* keywords */
+      .str {
+        color: #a5d6ff;
+      } /* strings */
+      .cls {
+        color: #d2a8ff;
+      } /* class/selector */
+      .fn {
+        color: #79c0ff;
+      } /* functions */
+      .cm {
+        color: #8b949e;
+        font-style: italic;
+      } /* comments */
+      .val {
+        color: #79c0ff;
+      } /* values */
+      .prop {
+        color: #e3b341;
+      } /* properties */
+      .tag {
+        color: #7ee787;
+      } /* html tags */
+      .attr {
+        color: #79c0ff;
+      } /* html attributes */
+      .num-val {
+        color: #f2cc60;
+      } /* numeric */
+
+      /* ── Warning/Note boxes ───────────── */
+      .alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .alert-icon {
+        font-size: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .alert-red {
+        background: var(--red-bg);
+        border: 1px solid var(--red-border);
+        color: #ffa198;
+      }
+      .alert-yellow {
+        background: var(--yellow-bg);
+        border: 1px solid var(--yellow-border);
+        color: #f0d080;
+      }
+      .alert-green {
+        background: var(--green-bg);
+        border: 1px solid var(--green-border);
+        color: #aff5b4;
+      }
+      .alert-blue {
+        background: var(--blue-bg);
+        border: 1px solid var(--blue-border);
+        color: #9ecbff;
+      }
+
+      /* ── Section Divider ─────────────── */
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 36px 0 20px;
+      }
+
+      .section-divider-label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      .section-divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ── Checklist ───────────────────── */
+      .checklist {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .checklist-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 14px;
+        font-size: 12px;
+        color: var(--text2);
+      }
+
+      .check-icon {
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      /* ── Scrollbar ───────────────────── */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg4);
+        border-radius: 3px;
+      }
+
+      /* ── Utility ─────────────────────── */
+      h2.section-h {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+
+      .section-desc {
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+        .main {
+          margin-left: 0;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- ══════════════ SIDEBAR ══════════════ -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title">📋 Improvement Guide</div>
+          <div class="sidebar-sub">Justine's Portfolio — v2.0</div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="sidebar-section-label">🔴 Critical</div>
+          <a class="nav-item" href="#fix1"
+            ><span class="priority-dot dot-red"></span>1. EmailJS Key Safety</a
+          >
+          <a class="nav-item" href="#fix2"
+            ><span class="priority-dot dot-red"></span>2. Remove Home Address</a
+          >
+          <a class="nav-item" href="#fix3"
+            ><span class="priority-dot dot-red"></span>3. Fix Email Link</a
+          >
+
+          <div class="sidebar-section-label">🟡 Code Quality</div>
+          <a class="nav-item" href="#fix4"
+            ><span class="priority-dot dot-yellow"></span>4. Duplicate CSS
+            Rules</a
+          >
+          <a class="nav-item" href="#fix5"
+            ><span class="priority-dot dot-yellow"></span>5. Duplicate Media
+            Queries</a
+          >
+          <a class="nav-item" href="#fix6"
+            ><span class="priority-dot dot-yellow"></span>6. Inline Styles in
+            JS</a
+          >
+          <a class="nav-item" href="#fix7"
+            ><span class="priority-dot dot-yellow"></span>7. Fix Start Menu
+            JS</a
+          >
+          <a class="nav-item" href="#fix8"
+            ><span class="priority-dot dot-yellow"></span>8. Duplicate CSS li
+            Rule</a
+          >
+          <a class="nav-item" href="#fix9"
+            ><span class="priority-dot dot-yellow"></span>9. Style Tags in JS</a
+          >
+
+          <div class="sidebar-section-label">🟠 Design & UX</div>
+          <a class="nav-item" href="#fix10"
+            ><span class="priority-dot dot-orange"></span>10. Meta Tags &amp;
+            SEO</a
+          >
+          <a class="nav-item" href="#fix11"
+            ><span class="priority-dot dot-orange"></span>11. Font Size Too
+            Small</a
+          >
+          <a class="nav-item" href="#fix12"
+            ><span class="priority-dot dot-orange"></span>12. Mobile
+            Navigation</a
+          >
+          <a class="nav-item" href="#fix13"
+            ><span class="priority-dot dot-orange"></span>13. Add a Favicon</a
+          >
+          <a class="nav-item" href="#fix14"
+            ><span class="priority-dot dot-orange"></span>14. Accessibility</a
+          >
+
+          <div class="sidebar-section-label">✅ Summary</div>
+          <a class="nav-item" href="#checklist"
+            ><span class="priority-dot dot-green"></span>Final Checklist</a
+          >
+        </nav>
+      </aside>
+
+      <!-- ══════════════ MAIN ══════════════ -->
+      <main class="main">
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-tag">Portfolio Review — Implementation Guide</div>
+          <h1>Your Step-by-Step<br /><span>Improvement Guide</span></h1>
+          <p>
+            This guide explains every change you need to make to your portfolio,
+            with before &amp; after code, simple explanations, and exact
+            instructions. Follow in order — start with the 🔴 red ones first!
+          </p>
+          <div class="stat-row">
+            <div class="stat-item">
+              <span class="stat-badge badge-red">3 Critical</span> Fix
+              immediately
+            </div>
+            <div class="stat-item">
+              <span class="stat-badge badge-yellow">6 Important</span> Code
+              quality
+            </div>
+            <div class="stat-item">
+              <span class="stat-badge badge-orange">5 Design</span> Polish &amp;
+              UX
+            </div>
+            <div class="stat-item">
+              <span class="stat-badge badge-green">14 Total</span> improvements
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ SECTION: CRITICAL ═══════════ -->
+        <div class="section-divider">
+          <span
+            class="section-divider-label badge-red"
+            style="
+              background: var(--red-bg);
+              color: var(--red);
+              border: 1px solid var(--red-border);
+            "
+            >🔴 Critical — Fix These First</span
+          >
+          <div class="section-divider-line"></div>
+        </div>
+
+        <!-- Fix 1 -->
+        <div class="change-card" id="fix1">
+          <div class="change-card-header">
+            <div class="change-number num-red">1</div>
+            <div class="change-title-group">
+              <div class="change-title">EmailJS API Key Safety</div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-red">Critical</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your EmailJS public key and
+              IDs are visible in your HTML source code. Anyone can view-source
+              your page and see them. While EmailJS public keys are meant to be
+              client-side, your Service ID and Template ID allow others to send
+              emails using your account and exhaust your free quota. Also,
+              having a comment that says <code>⚠️ REPLACE THIS</code> tells
+              employers the code is unfinished.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open your <code>index.html</code> file in VS Code.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Scroll to the very bottom, find the
+                  <strong>EmailJS initialization script</strong> (around line
+                  925).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Remove the comment that says <code>⚠️ REPLACE THIS</code> — it
+                  makes your code look unfinished.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">
+                  Log in to your <strong>EmailJS Dashboard</strong> → Settings →
+                  Security → Add your website domain to
+                  <strong>Allowed Origins</strong>. This prevents anyone else
+                  from using your keys.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-1-before')"
+                >
+                  ❌ Before
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-1-after')"
+                >
+                  ✅ After
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-1-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">928</span
+                    ><span class="line-content"> emailjs.init({</span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">929</span
+                    ><span class="line-content">
+                      publicKey: "lnDvXTz1wB_TOrbQw", // ⚠️ REPLACE THIS with
+                      your actual EmailJS public key from
+                      https://dashboard.emailjs.com/</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">930</span
+                    ><span class="line-content"> });</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">931</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">932</span
+                    ><span class="line-content">
+                      console.log("✅ All scripts loaded successfully!");</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-1-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">928</span
+                    ><span class="line-content"> emailjs.init({</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">929</span
+                    ><span class="line-content">
+                      publicKey: "lnDvXTz1wB_TOrbQw",</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">930</span
+                    ><span class="line-content"> });</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-yellow">
+              <span class="alert-icon">⚠️</span>
+              <div>
+                <strong>Also do this in EmailJS:</strong> Go to your EmailJS
+                Dashboard → Account → Security → add
+                <code>https://your-portfolio-domain.com</code> to the allowed
+                origins list. This is the real protection.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 2 -->
+        <div class="change-card" id="fix2">
+          <div class="change-card-header">
+            <div class="change-number num-red">2</div>
+            <div class="change-title-group">
+              <div class="change-title">Remove Your Full Home Address</div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-red"
+                  >Critical — Privacy Risk</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your exact street address
+              (<em>Rancho Imperial Kinale, Polangui...</em>) is visible to
+              everyone who visits your site. This is a serious privacy and
+              safety risk. Employers only need your general location — never
+              your home address.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>index.html</code> and find the Contact section
+                  (around line 635).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Look for the paragraph with your address and shorten it to
+                  just your city and province.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-2-before')"
+                >
+                  ❌ Before
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-2-after')"
+                >
+                  ✅ After
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-2-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">635</span
+                    ><span class="line-content">
+                      &lt;p&gt;Rancho Imperial Kinale, Polangui, Albay
+                      Philippines&lt;/p&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-2-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">635</span
+                    ><span class="line-content">
+                      &lt;p&gt;Polangui, Albay, Philippines&lt;/p&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-red">
+              <span class="alert-icon">🛑</span>
+              <div>
+                Never put your exact home address on a public website. City +
+                Province is more than enough for a portfolio.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 3 -->
+        <div class="change-card" id="fix3">
+          <div class="change-card-header">
+            <div class="change-number num-red">3</div>
+            <div class="change-title-group">
+              <div class="change-title">Fix the Broken Email Link</div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-red"
+                  >Critical — Broken Feature</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your email link was
+              obfuscated by Cloudflare's bot protection. This means on any
+              server that is NOT Cloudflare, visitors will see
+              <em>"[email protected]"</em> instead of your real email. It
+              completely breaks the contact section. We replace it with a
+              simple, reliable mailto link.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>index.html</code> and search for the text
+                  <code>__cf_email__</code> (around line 604).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Replace the entire anchor tag with a clean
+                  <code>mailto:</code> link.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-3-before')"
+                >
+                  ❌ Before (broken Cloudflare obfuscation)
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-3-after')"
+                >
+                  ✅ After (clean mailto link)
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-3-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">602</span
+                    ><span class="line-content"> &lt;a</span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">603</span
+                    ><span class="line-content">
+                      href="/cdn-cgi/l/email-protection"</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">604</span
+                    ><span class="line-content"> class="__cf_email__"</span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">605</span
+                    ><span class="line-content">
+                      data-cfemail="d0baa5a3..."</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">606</span
+                    ><span class="line-content">
+                      &gt;[email&#160;protected]&lt;/a&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-3-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">602</span
+                    ><span class="line-content">
+                      &lt;a href="mailto:justine.tesara0907@gmail.com"&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">603</span
+                    ><span class="line-content">
+                      justine.tesara0907@gmail.com</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">604</span
+                    ><span class="line-content"> &lt;/a&gt;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ SECTION: CODE QUALITY ═══════════ -->
+        <div class="section-divider">
+          <span
+            class="section-divider-label badge-yellow"
+            style="
+              background: var(--yellow-bg);
+              color: var(--yellow);
+              border: 1px solid var(--yellow-border);
+            "
+            >🟡 Code Quality — Clean Up Your Code</span
+          >
+          <div class="section-divider-line"></div>
+        </div>
+
+        <!-- Fix 4 -->
+        <div class="change-card" id="fix4">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">4</div>
+            <div class="change-title-group">
+              <div class="change-title">Remove Duplicate .window CSS Rule</div>
+              <div class="change-meta">
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> The
+              <code>.window</code> CSS class is written
+              <strong>twice</strong> in your stylesheet — once around line 87
+              and again around line 2096. The second one quietly overrides the
+              first, which causes confusion. Think of it like writing the same
+              recipe on two different pages — only the last one gets followed,
+              and nobody knows the first one exists.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>style.css</code> in VS Code. Press
+                  <code>Ctrl+F</code> and search for <code>.window {</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Find the <strong>first</strong> <code>.window</code> block
+                  (around line 87). Add the <code>transition</code> property to
+                  it.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Scroll further down and find the <strong>second</strong>
+                  <code>.window</code> block (around line 2096).
+                  <strong>Delete it entirely</strong> — those 15 lines.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-4-before')"
+                >
+                  ❌ Before — 2 separate blocks
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-4-after')"
+                >
+                  ✅ After — 1 clean block
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-4-before">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">87</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* BLOCK 1 — around line 87 */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">88</span
+                    ><span class="line-content"
+                      ><span class="cls">.window</span> {</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">89</span
+                    ><span class="line-content">
+                      <span class="prop">position</span>:
+                      <span class="val">absolute</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">90</span
+                    ><span class="line-content">
+                      <span class="prop">background</span>:
+                      <span class="val">#ece9d8</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">91</span
+                    ><span class="line-content">
+                      <span class="cm"
+                        >/* ... other properties ... */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">92</span
+                    ><span class="line-content">
+                      <span class="cm">/* ❌ Missing transition */</span></span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">93</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">2096</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* BLOCK 2 — around line 2096 (should be deleted!)
+                        */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">2097</span
+                    ><span class="line-content"
+                      ><span class="cls">.window</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">2098</span
+                    ><span class="line-content">
+                      <span class="prop">transition</span>:
+                      <span class="val"
+                        >opacity 0.3s ease, transform 0.3s ease</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">2099</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-4-after">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">87</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ✅ ONE block — everything in one place */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">88</span
+                    ><span class="line-content"
+                      ><span class="cls">.window</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">89</span
+                    ><span class="line-content">
+                      <span class="prop">position</span>:
+                      <span class="val">absolute</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">90</span
+                    ><span class="line-content">
+                      <span class="prop">background</span>:
+                      <span class="val">#ece9d8</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">91</span
+                    ><span class="line-content">
+                      <span class="prop">border</span>:
+                      <span class="val">3px solid</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">92</span
+                    ><span class="line-content">
+                      <span class="prop">border-color</span>:
+                      <span class="val">#f1ede2 #888c8f #888c8f #f1ede2</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">93</span
+                    ><span class="line-content">
+                      <span class="prop">box-shadow</span>:
+                      <span class="val">2px 2px 8px rgba(0,0,0,0.3)</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">94</span
+                    ><span class="line-content">
+                      <span class="prop">min-width</span>:
+                      <span class="val">400px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">95</span
+                    ><span class="line-content">
+                      <span class="prop">max-width</span>:
+                      <span class="val">90%</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">96</span
+                    ><span class="line-content">
+                      <span class="prop">min-height</span>:
+                      <span class="val">300px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">97</span
+                    ><span class="line-content">
+                      <span class="prop">max-height</span>:
+                      <span class="val">calc(100vh - 80px)</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">98</span
+                    ><span class="line-content">
+                      <span class="prop">display</span>:
+                      <span class="val">none</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">99</span
+                    ><span class="line-content">
+                      <span class="prop">flex-direction</span>:
+                      <span class="val">column</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">100</span
+                    ><span class="line-content">
+                      <span class="prop">z-index</span>:
+                      <span class="val">10</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">101</span
+                    ><span class="line-content">
+                      <span class="prop">transition</span>:
+                      <span class="val"
+                        >opacity 0.3s ease, transform 0.3s ease</span
+                      >; <span class="cm">/* ✅ Added here */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">102</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 5 -->
+        <div class="change-card" id="fix5">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">5</div>
+            <div class="change-title-group">
+              <div class="change-title">Merge Duplicate Media Query Blocks</div>
+              <div class="change-meta">
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> You have
+              <code>@media (max-width: 768px)</code> written
+              <strong>twice</strong> — once around line 747 and again around
+              line 819. While browsers handle this, it means when you need to
+              make mobile changes, you have to update
+              <em>two different places</em>. This is easy to forget and leads to
+              bugs. One media query block is the clean, professional way.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  In <code>style.css</code>, press <code>Ctrl+F</code> and
+                  search for <code>@media (max-width: 768px)</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  You will find <strong>two results</strong>. Copy all the CSS
+                  rules from the second block (around line 819).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Paste those rules <strong>inside</strong> the first block
+                  (around line 747).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">
+                  <strong>Delete</strong> the now-empty second
+                  <code>@media (max-width: 768px)</code> block entirely.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-5-before')"
+                >
+                  ❌ Before — split in 2 places
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-5-after')"
+                >
+                  ✅ After — 1 unified block
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-5-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">747</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* First block — line 747 */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">748</span
+                    ><span class="line-content"
+                      ><span class="kw">@media</span> (<span class="prop"
+                        >max-width</span
+                      >: <span class="num-val">768px</span>) {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">749</span
+                    ><span class="line-content">
+                      .desktop-icons { grid-template-columns: repeat(4, 70px);
+                      }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">750</span
+                    ><span class="line-content">
+                      .window { min-width: 300px; width: 95% !important; }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">751</span
+                    ><span class="line-content">
+                      .profile-section { flex-direction: column; }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">752</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">819</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* Second block — line 819 (duplicate!) */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">820</span
+                    ><span class="line-content"
+                      ><span class="kw">@media</span> (<span class="prop"
+                        >max-width</span
+                      >: <span class="num-val">768px</span>) {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">821</span
+                    ><span class="line-content">
+                      .window { width: 100% !important; top: 30px !important;
+                      }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">822</span
+                    ><span class="line-content">
+                      .desktop-icons { display: none; }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">823</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-5-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">747</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ✅ ONE block — all 768px styles in one place
+                        */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">748</span
+                    ><span class="line-content"
+                      ><span class="kw">@media</span> (<span class="prop"
+                        >max-width</span
+                      >: <span class="num-val">768px</span>) {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">749</span
+                    ><span class="line-content">
+                      <span class="cls">.desktop-icons</span> {
+                      <span class="prop">display</span>:
+                      <span class="val">none</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">750</span
+                    ><span class="line-content">
+                      <span class="cls">.window</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">751</span
+                    ><span class="line-content">
+                      <span class="prop">width</span>:
+                      <span class="val">100% !important</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">752</span
+                    ><span class="line-content">
+                      <span class="prop">height</span>:
+                      <span class="val">calc(100vh - 60px) !important</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">753</span
+                    ><span class="line-content">
+                      <span class="prop">top</span>:
+                      <span class="val">30px !important</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">754</span
+                    ><span class="line-content">
+                      <span class="prop">left</span>:
+                      <span class="val">0 !important</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">755</span
+                    ><span class="line-content">
+                      <span class="prop">max-width</span>:
+                      <span class="val">100% !important</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">756</span
+                    ><span class="line-content"> }</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">757</span
+                    ><span class="line-content">
+                      <span class="cls">.profile-section</span> {
+                      <span class="prop">flex-direction</span>:
+                      <span class="val">column</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">758</span
+                    ><span class="line-content">
+                      <span class="cls">.projects-grid</span> {
+                      <span class="prop">grid-template-columns</span>:
+                      <span class="val">1fr</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">759</span
+                    ><span class="line-content">
+                      <span class="cls">.start-menu</span> {
+                      <span class="prop">width</span>:
+                      <span class="val">250px</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">760</span
+                    ><span class="line-content">
+                      <span class="cls">.content-section</span> {
+                      <span class="prop">padding</span>:
+                      <span class="val">15px</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">761</span
+                    ><span class="line-content">
+                      <span class="cls">.title-bar</span> {
+                      <span class="prop">cursor</span>:
+                      <span class="val">default</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">762</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 6 -->
+        <div class="change-card" id="fix6">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">6</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Move Inline Styles from JavaScript to CSS
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">script.js</span>
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Writing CSS styles inside
+              JavaScript strings (like
+              <code>element.style.cssText = "..."</code>) is considered a bad
+              practice. It mixes two different concerns — logic and styling. It
+              makes it hard to update the design later, and it's a red flag in
+              code reviews. The golden rule is:
+              <em>CSS belongs in CSS files, JS belongs in JS files.</em>
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>style.css</code> and add the new CSS classes below
+                  (at the bottom of the file is fine).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Open <code>script.js</code> and find the
+                  <code>detectMobile()</code> function (line 2).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Replace the <code>style.cssText = "..."</code> with a simple
+                  <code>classList.add(...)</code> call.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-6-before')"
+                >
+                  ❌ Before — CSS inside JS
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-6-after')"
+                >
+                  ✅ After — CSS in CSS file
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-6-before">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── script.js ────────────────────────────── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">9</span
+                    ><span class="line-content">
+                      mobileWarning.style.cssText = `</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">10</span
+                    ><span class="line-content"> position: fixed;</span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">11</span
+                    ><span class="line-content">
+                      top: 0; left: 0; width: 100%;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">12</span
+                    ><span class="line-content">
+                      background: linear-gradient(135deg, #667eea,
+                      #764ba2);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      color: white; padding: 15px; text-align: center;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      z-index: 999999; font-family: Tahoma, sans-serif;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      font-size: 13px; box-shadow: 0 2px 10px
+                      rgba(0,0,0,0.3);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">16</span
+                    ><span class="line-content"> `;</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-6-after">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── ADD THIS to style.css ────────────────── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">2</span
+                    ><span class="line-content"
+                      ><span class="cls">.mobile-warning-banner</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">3</span
+                    ><span class="line-content">
+                      <span class="prop">position</span>:
+                      <span class="val">fixed</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      <span class="prop">top</span>: <span class="val">0</span>;
+                      <span class="prop">left</span>:
+                      <span class="val">0</span>;
+                      <span class="prop">width</span>:
+                      <span class="val">100%</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">5</span
+                    ><span class="line-content">
+                      <span class="prop">background</span>:
+                      <span class="val"
+                        >linear-gradient(135deg, #667eea, #764ba2)</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content">
+                      <span class="prop">color</span>:
+                      <span class="val">white</span>;
+                      <span class="prop">padding</span>:
+                      <span class="val">15px</span>;
+                      <span class="prop">text-align</span>:
+                      <span class="val">center</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content">
+                      <span class="prop">z-index</span>:
+                      <span class="val">999999</span>;
+                      <span class="prop">font-family</span>:
+                      <span class="val">Tahoma, sans-serif</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">13px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">10</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── CHANGE THIS in script.js ─────────────── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">11</span
+                    ><span class="line-content">
+                      mobileWarning.<span class="fn">classList</span>.<span
+                        class="fn"
+                        >add</span
+                      >(<span class="str">'mobile-warning-banner'</span>);</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 7 -->
+        <div class="change-card" id="fix7">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">7</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Fix the Start Menu — Use Existing HTML
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">script.js</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your
+              <code>index.html</code> already has a beautiful Start Menu element
+              (<code>#start-menu</code>) with proper styling. But your
+              JavaScript ignores it completely and creates a
+              <strong>brand new, duplicate</strong> Start Menu from scratch
+              every time the Start button is clicked — using messy inline
+              <code>onmouseover</code> handlers. This wastes memory, duplicates
+              code, and is an anti-pattern.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>script.js</code> and find the
+                  <code>toggleStartMenu()</code> function (around line 154).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Delete the entire function body — it's about 60 lines of code.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Replace it with the clean 3-line version below.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-7-before')"
+                >
+                  ❌ Before — creates a NEW menu every click
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-7-after')"
+                >
+                  ✅ After — toggles the existing HTML menu
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-7-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">154</span
+                    ><span class="line-content"
+                      ><span class="kw">function</span>
+                      <span class="fn">toggleStartMenu</span>() {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">155</span
+                    ><span class="line-content">
+                      <span class="kw">let</span> startMenu = document.<span
+                        class="fn"
+                        >getElementById</span
+                      >(<span class="str">"start-menu"</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">156</span
+                    ><span class="line-content">
+                      <span class="kw">if</span> (startMenu) { startMenu.<span
+                        class="fn"
+                        >remove</span
+                      >(); <span class="kw">return</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">157</span
+                    ><span class="line-content">
+                      startMenu = document.<span class="fn">createElement</span
+                      >(<span class="str">"div"</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">158</span
+                    ><span class="line-content">
+                      startMenu.id =
+                      <span class="str">"start-menu"</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">159</span
+                    ><span class="line-content">
+                      startMenu.style.cssText =
+                      <span class="str"
+                        >`position: fixed; bottom: 30px; ...`</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">160</span
+                    ><span class="line-content">
+                      startMenu.innerHTML =
+                      <span class="str"
+                        >`...60 lines of HTML strings with inline
+                        handlers...`</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">210</span
+                    ><span class="line-content">
+                      document.body.<span class="fn">appendChild</span
+                      >(startMenu);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">211</span
+                    ><span class="line-content">
+                      <span class="cm">/* ...more code... */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">212</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-7-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">154</span
+                    ><span class="line-content"
+                      ><span class="kw">function</span>
+                      <span class="fn">toggleStartMenu</span>() {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">155</span
+                    ><span class="line-content">
+                      <span class="kw">const</span> startMenu = document.<span
+                        class="fn"
+                        >getElementById</span
+                      >(<span class="str">'start-menu'</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">156</span
+                    ><span class="line-content">
+                      startMenu.classList.<span class="fn">toggle</span>(<span
+                        class="str"
+                        >'active'</span
+                      >);</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">157</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">159</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* Also add this to close menu when clicking outside
+                        */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">160</span
+                    ><span class="line-content"
+                      >document.<span class="fn">addEventListener</span>(<span
+                        class="str"
+                        >'click'</span
+                      >, (e) => {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">161</span
+                    ><span class="line-content">
+                      <span class="kw">const</span> startMenu = document.<span
+                        class="fn"
+                        >getElementById</span
+                      >(<span class="str">'start-menu'</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">162</span
+                    ><span class="line-content">
+                      <span class="kw">const</span> startBtn = document.<span
+                        class="fn"
+                        >querySelector</span
+                      >(<span class="str">'.start-button'</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">163</span
+                    ><span class="line-content">
+                      <span class="kw">if</span> (!startMenu.<span class="fn"
+                        >contains</span
+                      >(e.target) && !startBtn.<span class="fn">contains</span
+                      >(e.target)) {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">164</span
+                    ><span class="line-content">
+                      startMenu.classList.<span class="fn">remove</span>(<span
+                        class="str"
+                        >'active'</span
+                      >);</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">165</span
+                    ><span class="line-content"> }</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">166</span
+                    ><span class="line-content">});</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 8 -->
+        <div class="change-card" id="fix8">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">8</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Remove Duplicate .features-list li Rule
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> The
+              <code>.features-list li</code> CSS rule is written twice — once
+              around line 1914 and again at line 1924. The second one silently
+              overrides the first with slightly different values (<code
+                >padding</code
+              >
+              and <code>line-height</code>). The first one is dead code. Delete
+              it.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  In <code>style.css</code>, search for
+                  <code>.features-list li</code>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Find the <strong>first</strong> one (around line 1914) — it
+                  sets <code>padding: 10px</code> and
+                  <code>line-height: 1.6</code>.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  <strong>Delete lines 1914 to 1922</strong> (the entire first
+                  block). Keep only the second one.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-8-before')"
+                >
+                  ❌ Before — rule written twice
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-8-after')"
+                >
+                  ✅ After — one clean rule
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-8-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">1914</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ❌ Delete this entire block */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1915</span
+                    ><span class="line-content"
+                      ><span class="cls">.features-list li</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1916</span
+                    ><span class="line-content">
+                      <span class="prop">padding</span>:
+                      <span class="val">10px 0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1917</span
+                    ><span class="line-content">
+                      <span class="prop">padding-left</span>:
+                      <span class="val">30px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1918</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">13px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1919</span
+                    ><span class="line-content">
+                      <span class="prop">line-height</span>:
+                      <span class="val">1.6</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1920</span
+                    ><span class="line-content">
+                      <span class="prop">border-bottom</span>:
+                      <span class="val">1px solid #f0f0f0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">1921</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1924</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* This one stays — it's more complete */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1925</span
+                    ><span class="line-content"
+                      ><span class="cls">.features-list li</span> {</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1926</span
+                    ><span class="line-content">
+                      <span class="prop">padding</span>:
+                      <span class="val">12px 0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1927</span
+                    ><span class="line-content">
+                      <span class="prop">padding-left</span>:
+                      <span class="val">35px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1928</span
+                    ><span class="line-content">
+                      <span class="prop">line-height</span>:
+                      <span class="val">1.8</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1929</span
+                    ><span class="line-content">
+                      <span class="prop">transition</span>:
+                      <span class="val">background 0.2s ease</span>;</span
+                    >
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num">1930</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-8-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">1914</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ✅ Only this block remains */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1915</span
+                    ><span class="line-content"
+                      ><span class="cls">.features-list li</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1916</span
+                    ><span class="line-content">
+                      <span class="prop">padding</span>:
+                      <span class="val">12px 0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1917</span
+                    ><span class="line-content">
+                      <span class="prop">padding-left</span>:
+                      <span class="val">35px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1918</span
+                    ><span class="line-content">
+                      <span class="prop">position</span>:
+                      <span class="val">relative</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1919</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">13px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1920</span
+                    ><span class="line-content">
+                      <span class="prop">line-height</span>:
+                      <span class="val">1.8</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1921</span
+                    ><span class="line-content">
+                      <span class="prop">color</span>:
+                      <span class="val">#030303</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1922</span
+                    ><span class="line-content">
+                      <span class="prop">border-bottom</span>:
+                      <span class="val">1px solid #f0f0f0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1923</span
+                    ><span class="line-content">
+                      <span class="prop">transition</span>:
+                      <span class="val">background 0.2s ease</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">1924</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 9 -->
+        <div class="change-card" id="fix9">
+          <div class="change-card-header">
+            <div class="change-number num-yellow">9</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Move Injected &lt;style&gt; Tags to CSS File
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">script.js</span>
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-yellow">Code Quality</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> In your JavaScript, you
+              create a <code>&lt;style&gt;</code> tag and inject it into the
+              <code>&lt;head&gt;</code> at runtime. This is messy because CSS
+              rules shouldn't be created from JavaScript — they should just live
+              in your <code>style.css</code> file. Browsers handle CSS files
+              much more efficiently than runtime injections.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>script.js</code> and find around line 2093 —
+                  there's a block that does
+                  <code>document.createElement("style")</code>.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  <strong>Delete</strong> those lines (the style creation and
+                  <code>document.head.appendChild(style)</code>).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Open <code>style.css</code> and <strong>add</strong> the
+                  animations at the bottom of the file.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-9-before')"
+                >
+                  ❌ Before — style created in JS
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-9-after')"
+                >
+                  ✅ After — style in CSS file
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-9-before">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── script.js ~line 2093 — DELETE THIS ──── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">2</span
+                    ><span class="line-content">
+                      <span class="kw">const</span> style = document.<span
+                        class="fn"
+                        >createElement</span
+                      >(<span class="str">"style"</span>);</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">3</span
+                    ><span class="line-content">
+                      style.textContent = <span class="str">`</span></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      @keyframes slideIn { from { transform: translateX(400px);
+                      } }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">5</span
+                    ><span class="line-content">
+                      @keyframes slideOut { to { transform: translateX(400px); }
+                      }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">6</span
+                    ><span class="line-content">
+                      <span class="str">`</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">7</span
+                    ><span class="line-content">
+                      document.head.<span class="fn">appendChild</span
+                      >(style);</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-9-after">
+                <div class="code-block">
+                  <div class="code-line">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── ADD TO style.css (at the bottom) ────── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">2</span
+                    ><span class="line-content"
+                      ><span class="kw">@keyframes</span>
+                      <span class="fn">slideIn</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">3</span
+                    ><span class="line-content">
+                      <span class="kw">from</span> {
+                      <span class="prop">transform</span>:
+                      <span class="fn">translateX</span>(<span class="num-val"
+                        >400px</span
+                      >); <span class="prop">opacity</span>:
+                      <span class="num-val">0</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      <span class="kw">to</span> {
+                      <span class="prop">transform</span>:
+                      <span class="fn">translateX</span>(<span class="num-val"
+                        >0</span
+                      >); <span class="prop">opacity</span>:
+                      <span class="num-val">1</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">5</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content"
+                      ><span class="kw">@keyframes</span>
+                      <span class="fn">slideOut</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content">
+                      <span class="kw">from</span> {
+                      <span class="prop">transform</span>:
+                      <span class="fn">translateX</span>(<span class="num-val"
+                        >0</span
+                      >); <span class="prop">opacity</span>:
+                      <span class="num-val">1</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content">
+                      <span class="kw">to</span> {
+                      <span class="prop">transform</span>:
+                      <span class="fn">translateX</span>(<span class="num-val"
+                        >400px</span
+                      >); <span class="prop">opacity</span>:
+                      <span class="num-val">0</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ SECTION: DESIGN ═══════════ -->
+        <div class="section-divider">
+          <span
+            class="section-divider-label badge-orange"
+            style="
+              background: var(--orange-bg);
+              color: var(--orange);
+              border: 1px solid var(--orange-border);
+            "
+            >🟠 Design & UX — Polish & Professional Touch</span
+          >
+          <div class="section-divider-line"></div>
+        </div>
+
+        <!-- Fix 10 -->
+        <div class="change-card" id="fix10">
+          <div class="change-card-header">
+            <div class="change-number num-orange">10</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Add Meta Tags for SEO and Social Sharing
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-orange">SEO + Job-Ready</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> When someone shares your
+              portfolio link on LinkedIn or Facebook, there's no preview image,
+              title, or description — it just shows the URL. Meta tags fix this.
+              They also help Google understand your page, so your portfolio
+              shows up better in searches. This is a basic requirement for any
+              professional web project.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>index.html</code> and find your
+                  <code>&lt;head&gt;</code> section (the first few lines).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  After the existing <code>&lt;meta charset&gt;</code> and
+                  <code>&lt;meta viewport&gt;</code> tags, add the new tags
+                  below.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Also update the <code>&lt;title&gt;</code> to include your
+                  full name — this helps with SEO.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-10-before')"
+                >
+                  ❌ Before — bare minimum head
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-10-after')"
+                >
+                  ✅ After — full SEO head
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-10-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">3</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">head</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">charset</span>=<span class="str"
+                        >"UTF-8"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">5</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">name</span>=<span class="str"
+                        >"viewport"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"width=device-width, initial-scale=1.0"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">6</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">title</span>&gt;Justine -
+                      Portfolio&lt;/<span class="tag">title</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">7</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"stylesheet"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"style.css"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">8</span
+                    ><span class="line-content"
+                      >&lt;/<span class="tag">head</span>&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-10-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">3</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">head</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">charset</span>=<span class="str"
+                        >"UTF-8"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">5</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">name</span>=<span class="str"
+                        >"viewport"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"width=device-width, initial-scale=1.0"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">title</span>&gt;Justine Tesara |
+                      Front-End Developer&lt;/<span class="tag">title</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content">
+                      <span class="cm">&lt;!-- SEO Meta Tags --&gt;</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">name</span>=<span class="str"
+                        >"description"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"Justine Tesara — Front-End Web Developer. Creative
+                        Windows XP-themed portfolio."</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">10</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">name</span>=<span class="str"
+                        >"author"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"Justine Tesara"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">11</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">name</span>=<span class="str"
+                        >"keywords"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"Front-End Developer, Web Developer, Portfolio, HTML,
+                        CSS, JavaScript, Philippines"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">12</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      <span class="cm"
+                        >&lt;!-- Open Graph — LinkedIn / Facebook preview
+                        --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">property</span>=<span class="str"
+                        >"og:title"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"Justine Tesara | Front-End Developer Portfolio"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">property</span>=<span class="str"
+                        >"og:description"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"Creative Windows XP-themed portfolio by Justine
+                        Tesara."</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">16</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">property</span>=<span class="str"
+                        >"og:type"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"website"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">17</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">meta</span>
+                      <span class="attr">property</span>=<span class="str"
+                        >"og:url"</span
+                      >
+                      <span class="attr">content</span>=<span class="str"
+                        >"https://your-portfolio-url.com"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">18</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">19</span
+                    ><span class="line-content">
+                      <span class="cm">&lt;!-- Favicon --&gt;</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">20</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"icon"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"favicon.ico"</span
+                      >
+                      <span class="attr">type</span>=<span class="str"
+                        >"image/x-icon"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">21</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">22</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"stylesheet"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"style.css"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">23</span
+                    ><span class="line-content"
+                      >&lt;/<span class="tag">head</span>&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 11 -->
+        <div class="change-card" id="fix11">
+          <div class="change-card-header">
+            <div class="change-number num-orange">11</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Increase Font Size — 11px is Too Small
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-orange"
+                  >Accessibility + Readability</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your body font is set to
+              <code>11px</code>. Web accessibility guidelines (WCAG) recommend a
+              minimum of <strong>14–16px</strong> for body text. Small text is
+              hard to read, especially on mobile, and fails users with visual
+              impairments. Even within the Windows XP theme, you can increase
+              font size slightly without breaking the aesthetic.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>style.css</code> and find the
+                  <code>body</code> rule (line 12).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Change <code>font-size: 11px</code> to
+                  <code>font-size: 13px</code>.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Also update <code>.content-section p</code> and
+                  <code>.skill-badge</code> to match.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-11-before')"
+                >
+                  ❌ Before — tiny 11px
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-11-after')"
+                >
+                  ✅ After — readable 13px
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-11-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">12</span
+                    ><span class="line-content"
+                      ><span class="cls">body</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      <span class="prop">font-family</span>:
+                      <span class="str">"Tahoma"</span>,
+                      <span class="str">"Microsoft Sans Serif"</span>, Arial,
+                      sans-serif;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">11px</span>;
+                      <span class="cm">/* ❌ Way too small */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">15</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">250</span
+                    ><span class="line-content"
+                      ><span class="cls">.content-section p</span> {
+                      <span class="prop">font-size</span>:
+                      <span class="val">11px</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">313</span
+                    ><span class="line-content"
+                      ><span class="cls">.skill-badge</span> {
+                      <span class="prop">font-size</span>:
+                      <span class="val">11px</span>; }</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-11-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">12</span
+                    ><span class="line-content"
+                      ><span class="cls">body</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      <span class="prop">font-family</span>:
+                      <span class="str">"Tahoma"</span>,
+                      <span class="str">"Microsoft Sans Serif"</span>, Arial,
+                      sans-serif;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">13px</span>;
+                      <span class="cm">/* ✅ Better readability */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">15</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line">
+                    <span class="line-num"></span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">250</span
+                    ><span class="line-content"
+                      ><span class="cls">.content-section p</span> {
+                      <span class="prop">font-size</span>:
+                      <span class="val">13px</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">313</span
+                    ><span class="line-content"
+                      ><span class="cls">.skill-badge</span> {
+                      <span class="prop">font-size</span>:
+                      <span class="val">12px</span>; }</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 12 -->
+        <div class="change-card" id="fix12">
+          <div class="change-card-header">
+            <div class="change-number num-orange">12</div>
+            <div class="change-title-group">
+              <div class="change-title">Add a Mobile Navigation Bar</div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="file-tag">style.css</span>
+                <span class="stat-badge badge-orange">Mobile Experience</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> On mobile, your desktop
+              icons are hidden (by your own CSS), and the taskbar buttons are
+              too small to tap. Mobile users have no easy way to navigate. A
+              simple bottom navigation bar fixes this — it gives mobile users
+              big, tappable buttons to open each section. This is a very common
+              pattern in modern mobile design.
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>style.css</code> and add the mobile nav styles at
+                  the bottom.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Open <code>index.html</code> and add the mobile nav HTML just
+                  before the closing <code>&lt;/body&gt;</code> tag (after the
+                  start menu but before
+                  <code>&lt;script src="script.js"&gt;</code>).
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-12-before')"
+                >
+                  📄 ADD to style.css
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-12-after')"
+                >
+                  📄 ADD to index.html
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-12-before">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >/* ── ADD AT BOTTOM OF style.css ─────────── */</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">2</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">3</span
+                    ><span class="line-content"
+                      ><span class="cls">.mobile-nav</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      <span class="prop">display</span>:
+                      <span class="val">none</span>;
+                      <span class="cm">/* Hidden on desktop */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">5</span
+                    ><span class="line-content">}</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content"></span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content"
+                      ><span class="kw">@media</span> (<span class="prop"
+                        >max-width</span
+                      >: <span class="num-val">768px</span>) {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content">
+                      <span class="cls">.mobile-nav</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content">
+                      <span class="prop">display</span>:
+                      <span class="val">flex</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">10</span
+                    ><span class="line-content">
+                      <span class="prop">position</span>:
+                      <span class="val">fixed</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">11</span
+                    ><span class="line-content">
+                      <span class="prop">bottom</span>:
+                      <span class="val">30px</span>;
+                      <span class="cm">/* Sits above the taskbar */</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">12</span
+                    ><span class="line-content">
+                      <span class="prop">left</span>:
+                      <span class="val">0</span>;
+                      <span class="prop">width</span>:
+                      <span class="val">100%</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      <span class="prop">background</span>:
+                      <span class="val">rgba(25, 65, 165, 0.95)</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      <span class="prop">backdrop-filter</span>:
+                      <span class="val">blur(10px)</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      <span class="prop">justify-content</span>:
+                      <span class="val">space-around</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">16</span
+                    ><span class="line-content">
+                      <span class="prop">padding</span>:
+                      <span class="val">8px 0</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">17</span
+                    ><span class="line-content">
+                      <span class="prop">z-index</span>:
+                      <span class="val">9999</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">18</span
+                    ><span class="line-content">
+                      <span class="prop">border-top</span>:
+                      <span class="val">1px solid rgba(255,255,255,0.2)</span
+                      >;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">19</span
+                    ><span class="line-content"> }</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">20</span
+                    ><span class="line-content">
+                      <span class="cls">.mobile-nav-btn</span> {</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">21</span
+                    ><span class="line-content">
+                      <span class="prop">background</span>:
+                      <span class="val">none</span>;
+                      <span class="prop">border</span>:
+                      <span class="val">none</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">22</span
+                    ><span class="line-content">
+                      <span class="prop">color</span>:
+                      <span class="val">rgba(255,255,255,0.8)</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">23</span
+                    ><span class="line-content">
+                      <span class="prop">display</span>:
+                      <span class="val">flex</span>;
+                      <span class="prop">flex-direction</span>:
+                      <span class="val">column</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">24</span
+                    ><span class="line-content">
+                      <span class="prop">align-items</span>:
+                      <span class="val">center</span>;
+                      <span class="prop">gap</span>:
+                      <span class="val">4px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">25</span
+                    ><span class="line-content">
+                      <span class="prop">padding</span>:
+                      <span class="val">6px 12px</span>;
+                      <span class="prop">cursor</span>:
+                      <span class="val">pointer</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">26</span
+                    ><span class="line-content">
+                      <span class="prop">font-family</span>:
+                      <span class="val">Tahoma, sans-serif</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">27</span
+                    ><span class="line-content">
+                      <span class="prop">font-size</span>:
+                      <span class="val">10px</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">28</span
+                    ><span class="line-content">
+                      <span class="prop">transition</span>:
+                      <span class="val">color 0.2s</span>;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">29</span
+                    ><span class="line-content"> }</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">30</span
+                    ><span class="line-content">
+                      <span class="cls">.mobile-nav-btn:active</span> {
+                      <span class="prop">color</span>:
+                      <span class="val">white</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">31</span
+                    ><span class="line-content">
+                      <span class="cls">.mobile-nav-btn .nav-icon</span> {
+                      <span class="prop">font-size</span>:
+                      <span class="val">22px</span>; }</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">32</span
+                    ><span class="line-content">}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-12-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">1</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >&lt;!-- ADD THIS just before &lt;script
+                        src="script.js"&gt; --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">2</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">div</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"mobile-nav"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">3</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">button</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"mobile-nav-btn"</span
+                      >
+                      <span class="attr">onclick</span>=<span class="str"
+                        >"openWindow('about')"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">4</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"nav-icon"</span
+                      >&gt;👤&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">5</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>&gt;About&lt;/<span
+                        class="tag"
+                        >span</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content">
+                      &lt;/<span class="tag">button</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">button</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"mobile-nav-btn"</span
+                      >
+                      <span class="attr">onclick</span>=<span class="str"
+                        >"openWindow('skills')"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"nav-icon"</span
+                      >&gt;📊&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>&gt;Skills&lt;/<span
+                        class="tag"
+                        >span</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">10</span
+                    ><span class="line-content">
+                      &lt;/<span class="tag">button</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">11</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">button</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"mobile-nav-btn"</span
+                      >
+                      <span class="attr">onclick</span>=<span class="str"
+                        >"openWindow('projects')"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">12</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"nav-icon"</span
+                      >&gt;🌐&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">13</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>&gt;Projects&lt;/<span
+                        class="tag"
+                        >span</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">14</span
+                    ><span class="line-content">
+                      &lt;/<span class="tag">button</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">button</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"mobile-nav-btn"</span
+                      >
+                      <span class="attr">onclick</span>=<span class="str"
+                        >"openWindow('contact')"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">16</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"nav-icon"</span
+                      >&gt;📧&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">17</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>&gt;Contact&lt;/<span
+                        class="tag"
+                        >span</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">18</span
+                    ><span class="line-content">
+                      &lt;/<span class="tag">button</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">19</span
+                    ><span class="line-content"
+                      >&lt;/<span class="tag">div</span>&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 13 -->
+        <div class="change-card" id="fix13">
+          <div class="change-card-header">
+            <div class="change-number num-orange">13</div>
+            <div class="change-title-group">
+              <div class="change-title">Add a Favicon (Tab Icon)</div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-orange">Professionalism</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> A favicon is the tiny icon
+              that appears in the browser tab. Without one, your tab shows a
+              blank/generic icon — it looks unfinished. Every professional
+              website has a favicon. For your Windows XP theme, a small Windows
+              logo would be perfect!
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Go to
+                  <a href="https://favicon.io" style="color: var(--blue)"
+                    >favicon.io</a
+                  >
+                  — it's free! Type the letter <strong>J</strong>, choose a
+                  style, download the zip.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Extract the zip and copy <code>favicon.ico</code> into your
+                  project folder (same place as <code>index.html</code>).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  Add this line to your <code>&lt;head&gt;</code> (you can skip
+                  this if you already did Fix #10, it's already included there).
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-13-before')"
+                >
+                  ❌ Before — no favicon
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-13-after')"
+                >
+                  ✅ After — favicon added
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-13-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">6</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">title</span>&gt;Justine -
+                      Portfolio&lt;/<span class="tag">title</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">7</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"stylesheet"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"style.css"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">8</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >&lt;!-- ❌ No favicon! Tab shows blank icon
+                        --&gt;</span
+                      ></span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-13-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">6</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">title</span>&gt;Justine Tesara |
+                      Front-End Developer&lt;/<span class="tag">title</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">7</span
+                    ><span class="line-content"
+                      ><span class="cm"
+                        >&lt;!-- ✅ Favicon — shows icon in browser tab
+                        --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">8</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"icon"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"favicon.ico"</span
+                      >
+                      <span class="attr">type</span>=<span class="str"
+                        >"image/x-icon"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">9</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">link</span>
+                      <span class="attr">rel</span>=<span class="str"
+                        >"stylesheet"</span
+                      >
+                      <span class="attr">href</span>=<span class="str"
+                        >"style.css"</span
+                      >
+                      /&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-blue">
+              <span class="alert-icon">💡</span>
+              <div>
+                <strong>Tip:</strong> favicon.io also lets you create a favicon
+                from an emoji — try the 💻 or 🪟 emoji for a great Windows XP
+                vibe!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fix 14 -->
+        <div class="change-card" id="fix14">
+          <div class="change-card-header">
+            <div class="change-number num-orange">14</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                Improve Accessibility — Desktop Icons
+              </div>
+              <div class="change-meta">
+                <span class="file-tag">index.html</span>
+                <span class="stat-badge badge-orange">Accessibility</span>
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <div class="why-box">
+              <strong>Why does this matter?</strong> Your desktop icons use
+              <code>&lt;div&gt;</code> tags, but they behave like buttons (you
+              can click them). Screen readers (used by visually impaired users)
+              don't know these divs are clickable. The fix is to add
+              <code>role="button"</code> and <code>tabindex="0"</code> — this
+              tells browsers and assistive technology "this thing is
+              interactive." It also makes keyboard navigation work (pressing Tab
+              moves to icons, Enter activates them).
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  Open <code>index.html</code> and find the
+                  <code>class="desktop-icon"</code> divs (starting around line
+                  14).
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  Add <code>role="button"</code>, <code>tabindex="0"</code>, and
+                  an <code>aria-label</code> to each one as shown below.
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  There are 7 icons total — repeat this change for each one.
+                </div>
+              </div>
+            </div>
+
+            <div class="code-diff">
+              <div class="diff-tabs">
+                <div
+                  class="diff-tab before active"
+                  onclick="switchTab(this, 'tab-14-before')"
+                >
+                  ❌ Before — plain div, not accessible
+                </div>
+                <div
+                  class="diff-tab after"
+                  onclick="switchTab(this, 'tab-14-after')"
+                >
+                  ✅ After — accessible interactive element
+                </div>
+              </div>
+              <div class="diff-panel active" id="tab-14-before">
+                <div class="code-block">
+                  <div class="code-line line-remove">
+                    <span class="line-num">14</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">div</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"desktop-icon"</span
+                      >
+                      <span class="attr">data-window</span>=<span class="str"
+                        >"about"</span
+                      >&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      <span class="cm"
+                        >&lt;!-- ❌ Screen readers can't tell this is clickable
+                        --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">16</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">div</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"icon-image"</span
+                      >&gt;...&lt;/<span class="tag">div</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">17</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"icon-label"</span
+                      >&gt;About Me&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-remove">
+                    <span class="line-num">18</span
+                    ><span class="line-content"
+                      >&lt;/<span class="tag">div</span>&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="diff-panel" id="tab-14-after">
+                <div class="code-block">
+                  <div class="code-line line-add">
+                    <span class="line-num">14</span
+                    ><span class="line-content"
+                      >&lt;<span class="tag">div</span></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">15</span
+                    ><span class="line-content">
+                      <span class="attr">class</span>=<span class="str"
+                        >"desktop-icon"</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">16</span
+                    ><span class="line-content">
+                      <span class="attr">data-window</span>=<span class="str"
+                        >"about"</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">17</span
+                    ><span class="line-content">
+                      <span class="attr">role</span>=<span class="str"
+                        >"button"</span
+                      >
+                      <span class="cm"
+                        >&lt;!-- Tells screen readers it's clickable
+                        --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">18</span
+                    ><span class="line-content">
+                      <span class="attr">tabindex</span>=<span class="str"
+                        >"0"</span
+                      >
+                      <span class="cm"
+                        >&lt;!-- Makes it keyboard-focusable --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">19</span
+                    ><span class="line-content">
+                      <span class="attr">aria-label</span>=<span class="str"
+                        >"Open About Me window"</span
+                      >
+                      <span class="cm"
+                        >&lt;!-- Screen reader description --&gt;</span
+                      ></span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">20</span
+                    ><span class="line-content">&gt;</span>
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">21</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">div</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"icon-image"</span
+                      >&gt;...&lt;/<span class="tag">div</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">22</span
+                    ><span class="line-content">
+                      &lt;<span class="tag">span</span>
+                      <span class="attr">class</span>=<span class="str"
+                        >"icon-label"</span
+                      >&gt;About Me&lt;/<span class="tag">span</span>&gt;</span
+                    >
+                  </div>
+                  <div class="code-line line-add">
+                    <span class="line-num">23</span
+                    ><span class="line-content"
+                      >&lt;/<span class="tag">div</span>&gt;</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-blue">
+              <span class="alert-icon">💡</span>
+              <div>
+                <strong>Repeat for all 7 icons</strong> — About Me, Skills,
+                Internet Explorer, Contact, My Resume.pdf, Command Prompt, and
+                Minesweeper. Change the <code>aria-label</code> for each to
+                describe what it does.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ FINAL CHECKLIST ═══════════ -->
+        <div class="section-divider" id="checklist">
+          <span
+            class="section-divider-label badge-green"
+            style="
+              background: var(--green-bg);
+              color: var(--green);
+              border: 1px solid var(--green-border);
+            "
+            >✅ Final Checklist</span
+          >
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="change-card">
+          <div class="change-card-header">
+            <div class="change-number num-green">✓</div>
+            <div class="change-title-group">
+              <div class="change-title">
+                All 14 Improvements — Your Completion Checklist
+              </div>
+              <div class="change-meta">
+                <span class="stat-badge badge-green"
+                  >Use this to track your progress</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="change-body">
+            <p
+              style="font-size: 13px; color: var(--text2); margin-bottom: 16px"
+            >
+              Print this list or copy it to a notes app. Check off each item as
+              you complete it. Start with the 🔴 red items first — they're the
+              most important.
+            </p>
+            <div class="checklist">
+              <div class="checklist-item">
+                <span class="check-icon">🔴</span
+                ><span>1. Remove EmailJS comment + set allowed domains</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🔴</span
+                ><span>2. Shorten home address to city/province only</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🔴</span
+                ><span>3. Replace broken email with mailto: link</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>4. Remove duplicate .window CSS block</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>5. Merge duplicate @media 768px blocks</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>6. Move mobile warning styles to CSS class</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>7. Simplify toggleStartMenu() function</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>8. Delete duplicate .features-list li rule</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟡</span
+                ><span>9. Move @keyframes from JS to CSS file</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟠</span
+                ><span>10. Add meta tags + Open Graph to &lt;head&gt;</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟠</span
+                ><span>11. Increase font-size from 11px to 13px</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟠</span
+                ><span>12. Add mobile navigation bar</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟠</span
+                ><span>13. Add favicon.ico file and link tag</span>
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">🟠</span
+                ><span>14. Add role/tabindex to desktop icons</span>
+              </div>
+            </div>
+
+            <div class="alert alert-green" style="margin-top: 20px">
+              <span class="alert-icon">🎉</span>
+              <div>
+                <strong>Once you've done all 14:</strong> Your portfolio will be
+                cleaner, safer, more accessible, and genuinely job-ready. Your
+                Windows XP concept is already amazing — these fixes are just the
+                final layer of polish that separates a "cool project" from a
+                "professional portfolio." You've got this!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 40px"></div>
+      </main>
+    </div>
+
+    <script>
+      function switchTab(clickedTab, panelId) {
+        const diffBlock = clickedTab.closest(".code-diff");
+        diffBlock
+          .querySelectorAll(".diff-tab")
+          .forEach((t) => t.classList.remove("active"));
+        diffBlock
+          .querySelectorAll(".diff-panel")
+          .forEach((p) => p.classList.remove("active"));
+        clickedTab.classList.add("active");
+        document.getElementById(panelId).classList.add("active");
+      }
+    </script>
+  </body>
+</html>
