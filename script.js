@@ -1389,6 +1389,41 @@ function renderProjectsHome() {
     }),
   );
 
+  // Project 3: CipherNest – Secure Password Manager
+  grid.appendChild(
+    createProjectCard({
+      id: "ciphernest",
+      title: "CipherNest – Secure Password Manager",
+      description:
+        "A full-stack password manager with AES-256-GCM encryption, admin dashboard, and password generator. Built for learning purposes, inspired by Bitwarden and LastPass.",
+      image: "Pictures/ciphernest.png",
+      tech: [
+        "HTML",
+        "Tailwind CSS",
+        "JavaScript",
+        "Python",
+        "Flask",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "AES-256-GCM",
+        "Bcrypt",
+        "Flask-Mail",
+      ],
+      features: [
+        "AES-256-GCM encryption for all stored passwords",
+        "User authentication with bcrypt master password hashing",
+        "Password vault with add, edit, delete, copy, and search",
+        "Password generator using crypto.getRandomValues()",
+        "Forgot password reset flow via email with secure tokens",
+        "Password categories with color-coded filter badges",
+        "Admin dashboard with user management and system statistics",
+        "Brute force protection with account lockout system",
+        "CSRF protection, security headers, and auto logout",
+      ],
+      github: "https://github.com/JustineTesara/ciphernest",
+    }),
+  );
+
   return container;
 }
 
@@ -2027,7 +2062,6 @@ function renderContactPage() {
 
   // Add animation styles
   const style = document.createElement("style");
-
 
   return container;
 }
