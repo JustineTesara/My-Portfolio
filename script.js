@@ -1341,51 +1341,70 @@ function renderProjectsHome() {
   // Add projects
   const grid = container.querySelector("#projects-grid");
 
-  // Project 1: Journal Blog Site
+  // Project 1: Pourcello
   grid.appendChild(
     createProjectCard({
-      id: "journal",
-      title: "Journal Blog Site",
+      id: "pourcello",
+      title: "Pourcello",
       description:
-        "A simple Journal Blog Site where users can create and publish their own journal entries.",
-      image: "Pictures/JournalSite.jpg",
-      tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
-      features: [
-        "User authentication and authorization",
-        "Create, read, update, delete journal entries",
-        "Rich text editor for writing",
-        "Categories and tags for organization",
-        "Responsive design for all devices",
-      ],
-      github: "https://github.com/JustineTesara/Journal-Blog-Site",
-    }),
-  );
-
-  // Project 2: PipWise V2
-  grid.appendChild(
-    createProjectCard({
-      id: "pipwise-v2",
-      title: "PipWise V2 – Forex Trader Companion",
-      description:
-        "A lightweight forex trader companion app designed for risk management and strategy analysis.",
-      image: "Pictures/pipwise-v2.jpg",
+        "Pourcello is a full-stack coffee shop management system that combines a public-facing landing page with a staff admin panel. It is designed specifically for a café that also runs a curated reading lounge — handling everything from order-taking to book borrowing.",
+      image: "Pictures/pourcello.jpg",
       tech: [
         "HTML",
         "CSS",
-        "JavaScript",
-        "Node.js",
-        "Express.js",
-        "Alpha Vantage API",
+        "Vanilla JS",
+        "Node.js + Express.js",
+        "SQLite (via better-sqlite3)",
+        "JWT",
+        "bcrypt",
+        "Nodemon",
+        "Google Fonts (Playfair Display, DM Sans)",
       ],
       features: [
-        "Position size calculator for optimal trade sizing",
-        "Trading cost calculator (spread, commission, swap)",
-        "Portfolio risk manager with real-time P&L tracking",
-        "Strategy expectancy analyzer",
-        "Dark mode and Light mode theme switcher",
-        "Real-time forex data integration",
+        "User authentication and authorization",
+        "Menu browsing with categorized coffee and food items",
+        "Order tracking system for real-time order status",
+        "Customer reviews and ratings",
+        "Feedback system with complaint, suggestion, and compliment categorization",
+        "Loyalty rewards program",
+        "Reading Nook section for cafe ambiance content",
+        "Note Wall for customer interactions",
+        "Responsive design for all devices",
       ],
-      github: "https://github.com/JustineTesara/PipWise-V2",
+      github: "https://github.com/JustineTesara/Pourcello",
+    }),
+  );
+
+  // Project 2: CareerPurpose AI
+  grid.appendChild(
+    createProjectCard({
+      id: "careerpurpose-ai",
+      title: "CareerPurpose AI",
+      description:
+        "An AI-powered career platform for students, fresh graduates, freelancers, and job seekers in the Philippines. Built with React, Firebase, Tailwind CSS, and Groq AI (free).",
+      image: "Pictures/careerpurpose-ai.png",
+      tech: [
+        "React",
+        "Tailwind CSS 3",
+        "Firebase Auth",
+        "Groq API",
+        "jsPDF (PDF export)",
+        "docx + file-saver (Word export)",
+        "pdfjs-dist (PDF reading)",
+        "mammoth (Word reading)",
+        "Vercel (hosting)",
+      ],
+      features: [
+        "AI writes your resume → download as PDF or Word",
+        "Upload your resume → get ATS score + honest feedback",
+        "Tell us your goal → get a step-by-step learning plan",
+        "Practice interviews → get AI feedback on your answers",
+        "One click → personalized professional cover letter",
+        "Track applications, interviews, offers, and rejections",
+        "Free learning plans for any skill — Excel, coding, anything",
+        "Set daily goals and track your career progress",
+      ],
+      github: "https://github.com/JustineTesara/careerpurpose-ai",
     }),
   );
 
