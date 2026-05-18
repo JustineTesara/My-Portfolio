@@ -1039,6 +1039,31 @@ function shareProject() {
 }
 
 /* ===================================
+   Project Image Carousel
+   ================================== */
+let carouselIndex = 0;
+
+function carouselMove(direction) {
+  const track = document.getElementById("carousel-track");
+  if (!track) return;
+  const slides = track.querySelectorAll(".carousel-slide");
+  carouselIndex = (carouselIndex + direction + slides.length) % slides.length;
+  carouselGoTo(carouselIndex);
+}
+
+function carouselGoTo(index) {
+  const track = document.getElementById("carousel-track");
+  if (!track) return;
+  carouselIndex = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
+
+  // Update dots
+  document.querySelectorAll(".carousel-dot").forEach((dot, i) => {
+    dot.classList.toggle("active", i === index);
+  });
+}
+
+/* ===================================
    Shutdown Animation
    ================================== */
 function shutdownPortfolio() {
@@ -1348,7 +1373,13 @@ function renderProjectsHome() {
       title: "Pourcello",
       description:
         "Pourcello is a full-stack coffee shop management system that combines a public-facing landing page with a staff admin panel. It is designed specifically for a café that also runs a curated reading lounge — handling everything from order-taking to book borrowing.",
-      image: "Pictures/pourcello.jpg",
+      // AFTER
+      image: "Pictures/pourcello.jpg", // keep this as fallback
+      images: [
+        "Pictures/pourcello.jpg",
+        "Pictures/pourcello-2.jpg",
+        "Pictures/pourcello-3.jpg",
+      ],
       tech: [
         "HTML",
         "CSS",
@@ -1360,6 +1391,11 @@ function renderProjectsHome() {
         "Nodemon",
         "Google Fonts (Playfair Display, DM Sans)",
       ],
+      info: {
+        status: "✅ Completed",
+        type: "Full Stack",
+        year: "2025",
+      },
       features: [
         "User authentication and authorization",
         "Menu browsing with categorized coffee and food items",
@@ -1394,6 +1430,11 @@ function renderProjectsHome() {
         "mammoth (Word reading)",
         "Vercel (hosting)",
       ],
+      info: {
+        status: "✅ Completed",
+        type: "Full Stack",
+        year: "2025",
+      },
       features: [
         "AI writes your resume → download as PDF or Word",
         "Upload your resume → get ATS score + honest feedback",
@@ -1428,6 +1469,11 @@ function renderProjectsHome() {
         "Bcrypt",
         "Flask-Mail",
       ],
+      info: {
+        status: "✅ Completed",
+        type: "Full Stack",
+        year: "2026",
+      },
       features: [
         "AES-256-GCM encryption for all stored passwords",
         "User authentication with bcrypt master password hashing",
@@ -1477,13 +1523,37 @@ function createProjectCard(project) {
 }
 
 function renderProjectDetail(project) {
+  carouselIndex = 0; // Reset carousel index when opening a project
   const container = document.createElement("div");
   container.className = "project-view-container";
 
   container.innerHTML = `
     <div class="project-preview-column">
       <div class="project-preview-wrapper">
-        <img src="${project.image}" alt="${project.title}" class="project-preview-img" />
+        <div class="carousel-container">
+          <button class="carousel-btn carousel-prev" onclick="carouselMove(-1)">&#10094;</button>
+          <div class="carousel-track-wrapper">
+            <div class="carousel-track" id="carousel-track">
+              ${(project.images || [project.image])
+                .map(
+                  (src, i) => `
+                <img src="${src}" alt="${project.title} screenshot ${i + 1}" class="carousel-slide" />
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+          <button class="carousel-btn carousel-next" onclick="carouselMove(1)">&#10095;</button>
+        </div>
+        <div class="carousel-dots" id="carousel-dots">
+          ${(project.images || [project.image])
+            .map(
+              (_, i) => `
+            <span class="carousel-dot ${i === 0 ? "active" : ""}" onclick="carouselGoTo(${i})"></span>
+          `,
+            )
+            .join("")}
+        </div>
       </div>
       
       <h2 class="project-view-heading">${project.title}</h2>
@@ -1531,15 +1601,15 @@ function renderProjectDetail(project) {
         <h3 class="sidebar-title">Project Info</h3>
         <div class="stat-item">
           <span class="stat-label">Status:</span>
-          <span class="stat-value">✅ Completed</span>
+          <span class="stat-value">${project.info?.status}</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Type:</span>
-          <span class="stat-value">Full Stack</span>
+          <span class="stat-value">${project.info?.type}</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Year:</span>
-          <span class="stat-value">2025</span>
+          <span class="stat-value">${project.info?.year}</span>
         </div>
       </div>
     </div>
